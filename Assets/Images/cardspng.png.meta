@@ -1,0 +1,762 @@
+fileFormatVersion: 2
+guid: f63a398d6a7ff694ebdd333748861693
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: cardspng_0
+    21300002: cardspng_1
+    21300004: cardspng_2
+    21300006: cardspng_3
+    21300008: cardspng_4
+    21300010: cardspng_5
+    21300012: cardspng_6
+    21300014: cardspng_7
+    21300016: cardspng_8
+    21300018: cardspng_9
+    21300020: cardspng_10
+    21300022: cardspng_11
+    21300024: cardspng_12
+    21300026: cardspng_13
+    21300028: cardspng_14
+    21300030: cardspng_15
+    21300032: cardspng_16
+    21300034: cardspng_17
+    21300036: cardspng_18
+    21300038: cardspng_19
+    21300040: cardspng_20
+    21300042: cardspng_21
+    21300044: cardspng_22
+    21300046: cardspng_23
+    21300048: cardspng_24
+    21300050: cardspng_25
+    21300052: cardspng_26
+    21300054: cardspng_27
+    21300056: cardspng_28
+    21300058: cardspng_29
+    21300060: cardspng_30
+    21300062: cardspng_31
+    21300064: cardspng_32
+    21300066: cardspng_33
+    21300068: cardspng_34
+    21300070: cardspng_35
+    21300072: cardspng_36
+    21300074: cardspng_37
+    21300076: cardspng_38
+    21300078: cardspng_39
+    21300080: cardspng_40
+    21300082: cardspng_41
+    21300084: cardspng_42
+    21300086: cardspng_43
+    21300088: cardspng_44
+    21300090: cardspng_45
+    21300092: cardspng_46
+    21300094: cardspng_47
+    21300096: cardspng_48
+    21300098: cardspng_49
+    21300100: cardspng_50
+    21300102: cardspng_51
+    21300104: cardspng_52
+    21300106: cardspng_53
+    21300108: cardspng_54
+    21300110: cardspng_55
+    21300112: cardspng_56
+    21300114: cardspng_57
+    21300116: cardspng_58
+    21300118: cardspng_59
+    21300120: cardspng_60
+    21300122: cardspng_61
+    21300124: cardspng_62
+    21300126: cardspng_63
+    21300128: cardspng_64
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: cardspng_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 470
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_1
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 470
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_2
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 470
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_3
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 470
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_4
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 470
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_5
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 470
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_6
+      rect:
+        serializedVersion: 2
+        x: 486
+        y: 470
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_7
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 470
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_8
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 470
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_9
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 470
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_10
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 470
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_11
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 470
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_12
+      rect:
+        serializedVersion: 2
+        x: 972
+        y: 470
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 353
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_14
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 353
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_15
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 353
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_16
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 353
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_17
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 353
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_18
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 353
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_19
+      rect:
+        serializedVersion: 2
+        x: 486
+        y: 353
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_20
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 353
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_21
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 353
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_22
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 353
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_23
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 353
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_24
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 353
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_25
+      rect:
+        serializedVersion: 2
+        x: 972
+        y: 353
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_26
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 236
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_27
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 236
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_28
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 236
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_29
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 236
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_30
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 236
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_31
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 236
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_32
+      rect:
+        serializedVersion: 2
+        x: 486
+        y: 236
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_33
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 236
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_34
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 236
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_35
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 236
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_36
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 236
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_37
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 236
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_38
+      rect:
+        serializedVersion: 2
+        x: 972
+        y: 236
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_39
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 119
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_40
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 119
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_41
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 119
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_42
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 119
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_43
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 119
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_44
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 119
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_45
+      rect:
+        serializedVersion: 2
+        x: 486
+        y: 119
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_46
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 119
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_47
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 119
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_48
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 119
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_49
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 119
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_50
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 119
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_51
+      rect:
+        serializedVersion: 2
+        x: 972
+        y: 119
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_52
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_53
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 2
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_54
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 2
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_55
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 2
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_56
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 2
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_57
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 2
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_58
+      rect:
+        serializedVersion: 2
+        x: 486
+        y: 2
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_59
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 2
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_60
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 2
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_61
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 2
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_62
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 2
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_63
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 2
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: cardspng_64
+      rect:
+        serializedVersion: 2
+        x: 972
+        y: 2
+        width: 81
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
