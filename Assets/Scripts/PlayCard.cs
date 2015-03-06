@@ -3,16 +3,20 @@ using System.Collections;
 
 public class PlayCard : MonoBehaviour {
 
-    public GameObject placeHolder;
-    private bool mouseUp;
-	private Sprite newSprite;
+	public GameObject playbutton;
+	public float posX;
+	public float posY;
 
-	void OnTriggerEnter2D(Collider2D collision)
-    {
-            transform.position = placeHolder.transform.position;
+	void Start()
+	{
+		posX = transform.localScale.x;
+		posY = transform.localScale.y;
+	}
 
-            transform.localScale += new Vector3(4F + (collision.gameObject.transform.localScale.x * 0.3f), 4f + (collision.gameObject.transform.localScale.y * 0.3f), 0);
-			Destroy(gameObject);
-    }
+	void OnMouseDown()
+	{
+		Instantiate(playbutton, new Vector3(posX, posY, 0), Quaternion.identity);
+	}
+
 
 }
