@@ -9,13 +9,13 @@ public class PlayCard : MonoBehaviour {
 
 	void Start()
 	{
-		posX = transform.localScale.x;
-		posY = transform.localScale.y;
+		posX = transform.position.x;
+		posY = transform.position.y;
 	}
 
 	void OnMouseDown()
 	{
-		Instantiate(playbutton, new Vector3(posX, posY, 0), Quaternion.identity);
+		Instantiate(playbutton, new Vector3(posX, posY + transform.localScale.y, 0), Quaternion.identity);
 	}
 
 

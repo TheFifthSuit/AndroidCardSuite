@@ -1,14 +1,19 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayCard.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\WarMain.cs">
     <Files>
-      <File FileName="Assets\Scripts\StartWar.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\PlayCard.cs" Line="11" Column="3" />
-      <File FileName="Assets\Scripts\Draggable.cs" Line="16" Column="59" />
+      <File FileName="Assets\Scripts\WarMain.cs" Line="21" Column="42" />
+      <File FileName="Assets\Scripts\PlayCard.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Draggable.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CardValue.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\Joe\Documents\Senior Project\Assets\Scripts\CardID.cs" line="12" />
+      <Breakpoint file="C:\Users\Joe\Documents\Senior Project\Assets\Scripts\WarMain.cs" line="20" />
+      <Breakpoint file="C:\Users\Joe\Documents\Senior Project\Assets\Scripts\WarMain.cs" line="52" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
