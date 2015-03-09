@@ -4,10 +4,6 @@ using System.Collections.Generic;
 
 public class WarMain : MonoBehaviour {
 
-    //script objects
-    public CardValue cardvalue;
-
-
 
     //variables used in functions
     string lastCardPlayedPlayerOne;
@@ -60,17 +56,169 @@ public class WarMain : MonoBehaviour {
 			}
 		}
 	}
-
-
+    
+    
     private void processturn()
+    {        
+        //player one wins turn over opponent
+        //must add opponents card to player ones deck. Also must take players ones card they just played and add it to back of deck
+        if(getCardValue(playerOneCards[0]) > getCardValue(opponentCards[0]))
+        {
+            playerOneWin(0);
+        }
+
+
+        //opponent wins turn
+        if (getCardValue(playerOneCards[0]) < getCardValue(opponentCards[0]))
+        {
+            opponentWin(0);
+        }
+
+        //WARRRRRRR!!!!
+        //laying one more card face down then playing next card after that
+        if (getCardValue(playerOneCards[0]) == getCardValue(opponentCards[0]))
+        {
+            int i = 0;
+            string winner = "none";
+
+            while (winner == "none")
+            {
+                i = i + 2;
+                
+                if(getCardValue(playerOneCards[i]) > getCardValue(opponentCards[i]))
+                {
+                    winner = "playerone";
+                }
+                if(getCardValue(playerOneCards[0]) < getCardValue(opponentCards[0]))
+                {
+                    winner = "opponent";
+                }
+            }
+
+            if (winner == "playerone")
+            {
+                for (int x = 0; x <= i; x++)
+                {
+                    playerOneWin(x);
+                }
+            }
+
+            if (winner == "opponent")
+            {
+                for (int x = 0; x <= i; x++)
+                {
+                    opponentWin(x);
+                }
+            }
+        }
+    
+        
+        GameObject manager = GameObject.Find("_Manager");
+        ChangeScene changescene = manager.GetComponent<ChangeScene>();
+       
+        //Check for winner before turn is over
+        if (playerOneCards.Count == 0)
+        {
+            changescene.changeToScene("menu");
+        }
+
+        if (opponentCards.Count == 0)
+        {
+            changescene.changeToScene("menu");
+        }
+    }
+
+    private void playerOneWin(int cardWon)
     {
-        GameObject playercard;
-        GameObject opponentcard;
+        string tempCardHolder;
 
-        playercard = GameObject.FindGameObjectWithTag("Finish");
+        //adding opponents card that was won to back of player ones deck.
+        playerOneCards.Add(opponentCards[0]);
+        opponentCards.RemoveAt(0);
 
-		playercard.gameObject.GetComponent<CardValue>().getCardValue();
+        //moving played card to back of deck
+        tempCardHolder = playerOneCards[0];
+        playerOneCards.RemoveAt(0);
+        playerOneCards.Add(tempCardHolder);
+    }
 
+    private void opponentWin(int cardWon)
+    {
+        string tempCardHolder;
+
+        //adding player ones card that was won to back of opponents deck.
+        opponentCards.Add(playerOneCards[0]);
+        playerOneCards.RemoveAt(0);
+
+        //moving played card to back of deck
+        tempCardHolder = opponentCards[0];
+        opponentCards.RemoveAt(0);
+        opponentCards.Add(tempCardHolder);
+    }
+
+
+    private int getCardValue(string card)
+    {
+        int cardValue = 0;
+        
+        if(card.Contains("one"))
+        {
+            cardValue = 1;
+        }
+        if (card.Contains("two"))
+        {
+            cardValue = 2;
+        }
+        if(card.Contains("three"))
+        {
+            cardValue = 3;
+        }
+        if(card.Contains("four"))
+        {
+            cardValue = 4;
+        }
+        if(card.Contains("five"))
+        {
+            cardValue = 5;
+        }
+        if(card.Contains("six"))
+        {
+            cardValue = 6;
+        }
+        if(card.Contains("seven"))
+        {
+            cardValue = 7;
+        }
+        if(card.Contains("eight"))
+        {
+            cardValue = 8;
+        }
+        if(card.Contains("nine"))
+        {
+            cardValue = 9;
+        }
+        if(card.Contains("ten"))
+        {
+            cardValue = 10;
+        }
+        if (card.Contains("jack"))
+        {
+            cardValue = 11;
+        }
+        if(card.Contains("queen"))
+        {
+            cardValue = 12;
+        }
+        if(card.Contains("king"))
+        {
+            cardValue = 13;
+        }
+        if(card.Contains("ace"))
+        {
+            cardValue = 14;
+        }
+
+        return cardValue;
     }
 
     private void cardToScreen()
@@ -140,178 +288,177 @@ public class WarMain : MonoBehaviour {
             
             //Diamonds
             case "oneD":
-                Instantiate(deckobjects.oneH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.oneD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "oneD";
                 break;
             case "twoD":
-                Instantiate(deckobjects.twoH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.twoD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "twoD";
                 break;
             case "threeD":
-                Instantiate(deckobjects.threeH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.threeD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "threeD";
                 break;
             case "fourD":
-                Instantiate(deckobjects.fourH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.fourD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "fourD";
                 break;
             case "fiveD":
-                Instantiate(deckobjects.fiveH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.fiveD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "fiveD";
                 break;
             case "sixD":
-                Instantiate(deckobjects.sixH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.sixD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "sixD";
                 break;
             case "sevenD":
-                Instantiate(deckobjects.sevenH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.sevenD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "sevenD";
                 break;
             case "eightD":
-                Instantiate(deckobjects.eightH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.eightD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "eightD";
                 break;
             case "nineD":
-                Instantiate(deckobjects.nineH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.nineD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "nineD";
                 break;
             case "tenD":
-                Instantiate(deckobjects.tenH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.tenD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "tenD";
                 break;
             case "jackD":
-                Instantiate(deckobjects.jackH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.jackD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "jackD";
                 break;
             case "queenD":
-                Instantiate(deckobjects.queenH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.queenD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "queenD";
                 break;
             case "kingD":
-                Instantiate(deckobjects.kingH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.kingD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "kingD";
                 break;
             case "aceD":
-                Instantiate(deckobjects.aceH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.aceD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "aceD";
                 break;
 
             //Clubs
             case "oneC":
-                Instantiate(deckobjects.oneH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.oneC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "oneC";
                 break;
             case "twoC":
-                Instantiate(deckobjects.twoH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.twoC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "twoC";
                 break;
             case "threeC":
-                Instantiate(deckobjects.threeH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.threeC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "threeC";
                 break;
             case "fourC":
-                Instantiate(deckobjects.fourH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.fourC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "fourC";
                 break;
             case "fiveC":
-                Instantiate(deckobjects.fiveH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.fiveC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "fiveC";
                 break;
             case "sixC":
-                Instantiate(deckobjects.sixH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.sixC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "sixC";
                 break;
             case "sevenC":
-                Instantiate(deckobjects.sevenH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.sevenC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "sevenC";
                 break;
             case "eightC":
-                Instantiate(deckobjects.eightH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.eightC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "eightC";
                 break;
             case "nineC":
-                Instantiate(deckobjects.nineH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.nineC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "nineC";
                 break;
             case "tenC":
-                Instantiate(deckobjects.tenH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.tenC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "tenC";
                 break;
             case "jackC":
-                Instantiate(deckobjects.jackH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.jackC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "jackC";
                 break;
             case "queenC":
-                Instantiate(deckobjects.queenH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.queenC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "queenC";
                 break;
             case "kingC":
-                Instantiate(deckobjects.kingH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.kingC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "kingC";
                 break;
             case "aceC":
-                Instantiate(deckobjects.aceH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.aceC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "aceC";
                 break;
 
             //Spades
             case "oneS":
-                Instantiate(deckobjects.oneH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.oneS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "oneS";
                 break;
             case "twoS":
-                Instantiate(deckobjects.twoH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.twoS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "twoS";
                 break;
             case "threeS":
-                Instantiate(deckobjects.threeH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.threeS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "threeS";
                 break;
             case "fourS":
-                Instantiate(deckobjects.fourH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.fourS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "fourS";
                 break;
             case "fiveS":
-                Instantiate(deckobjects.fiveH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.fiveS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "fiveS";
                 break;
             case "sixS":
-                Instantiate(deckobjects.sixH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.sixS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "sixS";
                 break;
             case "sevenS":
-                Instantiate(deckobjects.sevenH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.sevenS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "sevenS";
                 break;
             case "eightS":
-                Instantiate(deckobjects.eightH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.eightS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "eightS";
                 break;
             case "nineS":
-                Instantiate(deckobjects.nineH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.nineS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "nineS";
                 break;
             case "tenS":
-                Instantiate(deckobjects.tenH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.tenS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "tenS";
                 break;
             case "jackS":
-                Instantiate(deckobjects.jackH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.jackS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "jackS";
                 break;
             case "queenS":
-                Instantiate(deckobjects.queenH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.queenS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "queenS";
                 break;
             case "kingS":
-                Instantiate(deckobjects.kingH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.kingS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "kingS";
                 break;
             case "aceS":
-                Instantiate(deckobjects.aceH, new Vector3(0, 0, 0), Quaternion.identity);
+                Instantiate(deckobjects.aceS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "aceS";
                 break;
-
         }
         #endregion
 
@@ -319,236 +466,235 @@ public class WarMain : MonoBehaviour {
         switch (opponentCards[0])
         {
             case "oneH":
-                Instantiate(deckobjects.oneH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.oneH, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "oneH";
                 break;
             case "twoH":
-                Instantiate(deckobjects.twoH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.twoH, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "twoH";
                 break;
             case "threeH":
-                Instantiate(deckobjects.threeH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.threeH, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "threeH";
                 break;
             case "fourH":
-                Instantiate(deckobjects.fourH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.fourH, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "fourH";
                 break;
             case "fiveH":
-                Instantiate(deckobjects.fiveH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.fiveH, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "fiveH";
                 break;
             case "sixH":
-                Instantiate(deckobjects.sixH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.sixH, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "sixH";
                 break;
             case "sevenH":
-                Instantiate(deckobjects.sevenH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.sevenH, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "sevenH";
                 break;
             case "eightH":
-                Instantiate(deckobjects.eightH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.eightH, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "eightH";
                 break;
             case "nineH":
-                Instantiate(deckobjects.nineH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.nineH, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "nineH";
                 break;
             case "tenH":
-                Instantiate(deckobjects.tenH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.tenH, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "tenH";
                 break;
             case "jackH":
-                Instantiate(deckobjects.jackH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.jackH, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "jackH";
                 break;
             case "queenH":
-                Instantiate(deckobjects.queenH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.queenH, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "queenH";
                 break;
             case "kingH":
-                Instantiate(deckobjects.kingH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.kingH, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "kingH";
                 break;
             case "aceH":
-                Instantiate(deckobjects.aceH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.aceH, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "aceH";
                 break;
 
             //Diamonds
             case "oneD":
-                Instantiate(deckobjects.oneH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.oneD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "oneD";
                 break;
             case "twoD":
-                Instantiate(deckobjects.twoH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.twoD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "twoD";
                 break;
             case "threeD":
-                Instantiate(deckobjects.threeH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.threeD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "threeD";
                 break;
             case "fourD":
-                Instantiate(deckobjects.fourH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.fourD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "fourD";
                 break;
             case "fiveD":
-                Instantiate(deckobjects.fiveH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.fiveD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "fiveD";
                 break;
             case "sixD":
-                Instantiate(deckobjects.sixH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.sixD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "sixD";
                 break;
             case "sevenD":
-                Instantiate(deckobjects.sevenH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.sevenD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "sevenD";
                 break;
             case "eightD":
-                Instantiate(deckobjects.eightH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.eightD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "eightD";
                 break;
             case "nineD":
-                Instantiate(deckobjects.nineH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.nineD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "nineD";
                 break;
             case "tenD":
-                Instantiate(deckobjects.tenH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.tenD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "tenD";
                 break;
             case "jackD":
-                Instantiate(deckobjects.jackH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.jackD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "jackD";
                 break;
             case "queenD":
-                Instantiate(deckobjects.queenH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.queenD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "queenD";
                 break;
             case "kingD":
-                Instantiate(deckobjects.kingH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.kingD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "kingD";
                 break;
             case "aceD":
-                Instantiate(deckobjects.aceH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.aceD, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "aceD";
                 break;
 
             //Clubs
             case "oneC":
-                Instantiate(deckobjects.oneH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.oneC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "oneC";
                 break;
             case "twoC":
-                Instantiate(deckobjects.twoH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.twoC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "twoC";
                 break;
             case "threeC":
-                Instantiate(deckobjects.threeH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.threeC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "threeC";
                 break;
             case "fourC":
-                Instantiate(deckobjects.fourH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.fourC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "fourC";
                 break;
             case "fiveC":
-                Instantiate(deckobjects.fiveH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.fiveC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "fiveC";
                 break;
             case "sixC":
-                Instantiate(deckobjects.sixH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.sixC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "sixC";
                 break;
             case "sevenC":
-                Instantiate(deckobjects.sevenH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.sevenC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "sevenC";
                 break;
             case "eightC":
-                Instantiate(deckobjects.eightH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.eightC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "eightC";
                 break;
             case "nineC":
-                Instantiate(deckobjects.nineH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.nineC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "nineC";
                 break;
             case "tenC":
-                Instantiate(deckobjects.tenH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.tenC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "tenC";
                 break;
             case "jackC":
-                Instantiate(deckobjects.jackH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.jackC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "jackC";
                 break;
             case "queenC":
-                Instantiate(deckobjects.queenH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.queenC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "queenC";
                 break;
             case "kingC":
-                Instantiate(deckobjects.kingH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.kingC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "kingC";
                 break;
             case "aceC":
-                Instantiate(deckobjects.aceH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.aceC, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "aceC";
                 break;
 
             //Spades
             case "oneS":
-                Instantiate(deckobjects.oneH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.oneS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "oneS";
                 break;
             case "twoS":
-                Instantiate(deckobjects.twoH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.twoS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "twoS";
                 break;
             case "threeS":
-                Instantiate(deckobjects.threeH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.threeS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "threeS";
                 break;
             case "fourS":
-                Instantiate(deckobjects.fourH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.fourS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "fourS";
                 break;
             case "fiveS":
-                Instantiate(deckobjects.fiveH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.fiveS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "fiveS";
                 break;
             case "sixS":
-                Instantiate(deckobjects.sixH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.sixS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "sixS";
                 break;
             case "sevenS":
-                Instantiate(deckobjects.sevenH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.sevenS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "sevenS";
                 break;
             case "eightS":
-                Instantiate(deckobjects.eightH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.eightS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "eightS";
                 break;
             case "nineS":
-                Instantiate(deckobjects.nineH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.nineS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "nineS";
                 break;
             case "tenS":
-                Instantiate(deckobjects.tenH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.tenS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "tenS";
                 break;
             case "jackS":
-                Instantiate(deckobjects.jackH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.jackS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "jackS";
                 break;
             case "queenS":
-                Instantiate(deckobjects.queenH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.queenS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "queenS";
                 break;
             case "kingS":
-                Instantiate(deckobjects.kingH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.kingS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "kingS";
                 break;
             case "aceS":
-                Instantiate(deckobjects.aceH, new Vector3(1, 1, 0), Quaternion.identity);
+                Instantiate(deckobjects.aceS, new Vector3(0, 0, 0), Quaternion.identity);
                 lastCardPlayedOpponent = "aceS";
                 break;
-
         }
         #endregion
     }
