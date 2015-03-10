@@ -4,7 +4,6 @@ using System.Collections;
 public class DeckObjects : MonoBehaviour {
 
     //Hearts
-    public GameObject oneH;
     public GameObject twoH;
     public GameObject threeH;
     public GameObject fourH;
@@ -20,7 +19,6 @@ public class DeckObjects : MonoBehaviour {
     public GameObject aceH;
 
     //Diamonds
-    public GameObject oneD;
     public GameObject twoD;
     public GameObject threeD;
     public GameObject fourD;
@@ -36,7 +34,6 @@ public class DeckObjects : MonoBehaviour {
     public GameObject aceD;
 
     //Clubs
-    public GameObject oneC;
     public GameObject twoC;
     public GameObject threeC;
     public GameObject fourC;
@@ -52,7 +49,6 @@ public class DeckObjects : MonoBehaviour {
     public GameObject aceC;
 
     //Spades
-    public GameObject oneS;
     public GameObject twoS;
     public GameObject threeS;
     public GameObject fourS;

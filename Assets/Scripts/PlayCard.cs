@@ -3,22 +3,22 @@ using System.Collections;
 
 public class PlayCard : MonoBehaviour {
 
-	public GameObject playbutton;
-    private WarMain warmain;
-	public float posX;
-	public float posY;
+    public GameObject winMessage;
+    public GameObject loseMessage;
+    
+    void OnMouseDown()
+    {
+        GameObject manager = GameObject.Find("_Manager");
+        WarMain warmain = manager.GetComponent<WarMain>();
 
-	void Start()
-	{
-		posX = transform.position.x;
-		posY = transform.position.y;
-	}
+        warmain.cardToScreenOpponent();
+        warmain.processturn();
 
-	void OnMouseDown()
-	{
-		Instantiate(playbutton, new Vector3(posX, posY + transform.localScale.y, 0), Quaternion.identity);
+        if(warmain.lastHandWinner == "PlayerOne")
+            Instantiate(winMessage, new Vector3(0, 0, 0), Quaternion.identity);
+        if (warmain.lastHandWinner == "Opponent")
+            Instantiate(loseMessage, new Vector3(0, 0, 0), Quaternion.identity);
 
-	}
-
-
+        GameObject.Destroy(this.gameObject);
+    }
 }
