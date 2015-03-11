@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class WarMain : MonoBehaviour {
+public class BlackjackMain : MonoBehaviour {
 
 
     //variables used in functions
