@@ -24,7 +24,7 @@ public class WarMain : MonoBehaviour {
 	List<string> opponentCards = new List<string>();
 
 
-	private void dealPlayerCards ()
+	private void dealPlayerCards()
 	{
 		List<int> dealtCards = new List<int>();
 
