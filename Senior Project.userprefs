@@ -2,27 +2,28 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\WarMain.cs">
     <Files>
-      <File FileName="Assets\Scripts\WarMain.cs" Line="175" Column="29" />
-      <File FileName="Assets\Scripts\DisplayPlayButton.cs" Line="14" Column="3" />
-      <File FileName="Assets\Scripts\ClearBoard.cs" Line="21" Column="3" />
-      <File FileName="Assets\Scripts\ClearHandResults.cs" Line="11" Column="33" />
+      <File FileName="Assets\Scripts\WarMain.cs" Line="103" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Assembly-CSharp" expanded="True">
-            <Node name="Scripts" expanded="True">
-              <Node name="WarMain.cs" selected="True" />
-            </Node>
-          </Node>
+          <Node name="Assembly-CSharp" expanded="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">
-        <State expanded="True" selected="True" />
+        <State selected="True" />
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>Click here to add a new watch</Value>
+          <Value>playerOneCards</Value>
+          <Value>getCardValue(playerOneCards[0])</Value>
+          <Value>getCardValue(opponentCards[0])</Value>
+          <Value>playerOneCards.Count</Value>
+          <Value>opponentCards.Count</Value>
+          <Value>playerOneCards[i]</Value>
+          <Value>opponentCards[i]</Value>
+          <Value>i</Value>
+          <Value>winner</Value>
         </State>
       </Pad>
     </Pads>
@@ -32,14 +33,7 @@
       <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\PlayCard.cs" line="26" />
       <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\PlayCard.cs" line="27" />
       <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\PlayCard.cs" line="28" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\WarMain.cs" line="160" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\WarMain.cs" line="172" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
-    <Watch file="Assets\Scripts\WarMain.cs" line="9" offsetX="333" offsetY="136" expression="DeckObjects" liveUpdate="False" />
-    <Watch file="Assets\Scripts\WarMain.cs" line="84" offsetX="677" offsetY="1411" expression="playerOneCards" liveUpdate="False" />
-    <Watch file="Assets\Scripts\WarMain.cs" line="84" offsetX="677" offsetY="1411" expression="playerOneCards" liveUpdate="False" />
-    <Watch file="Assets\Scripts\WarMain.cs" line="84" offsetX="677" offsetY="1411" expression="playerOneCards" liveUpdate="False" />
-  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

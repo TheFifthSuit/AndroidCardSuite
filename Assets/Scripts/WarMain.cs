@@ -62,21 +62,23 @@ public class WarMain : MonoBehaviour {
     
     public void processturn()
     {
-        GameObject manager = GameObject.Find("_Manager");
-        ChangeScene changescene = manager.GetComponent<ChangeScene>();
-        
-        //player one wins turn over opponent
+		GameObject manager = GameObject.Find("_Manager");
+		ChangeScene changescene = manager.GetComponent<ChangeScene>();
+
+		//player one wins turn over opponent
         //must add opponents card to player ones deck. Also must take players ones card they just played and add it to back of deck
         if(getCardValue(playerOneCards[0]) > getCardValue(opponentCards[0]))
         {
-            playerOneWin(0);
-        }
-
-
+            playerOneWin();
+			checkForWinner();
+			return;
+		}
         //opponent wins turn
-        if (getCardValue(playerOneCards[0]) < getCardValue(opponentCards[0]))
+        else if (getCardValue(playerOneCards[0]) < getCardValue(opponentCards[0]))
         {
-            opponentWin(0);
+            opponentWin();
+			checkForWinner();
+			return;
         }
 
         //WARRRRRRR!!!!
@@ -106,7 +108,7 @@ public class WarMain : MonoBehaviour {
                 {
                 	winner = "playerone";
             	}
-            	if (getCardValue(playerOneCards[0]) < getCardValue(opponentCards[0]))
+            	if (getCardValue(playerOneCards[i]) < getCardValue(opponentCards[i]))
             	{
                 	winner = "opponent";
             	}
@@ -116,7 +118,7 @@ public class WarMain : MonoBehaviour {
             {
                 for (int x = 0; x <= i; x++)
                 {
-                    playerOneWin(x);
+                    playerOneWin();
                 }
             }
 
@@ -124,24 +126,30 @@ public class WarMain : MonoBehaviour {
             {
                 for (int x = 0; x <= i; x++)
                 {
-                    opponentWin(x);
+                    opponentWin();
                 }
             }
         }
-         
-        //Check for winner before turn is over
-        if (playerOneCards.Count == 0)
-        {
-            changescene.changeToScene("menu");
-        }
-
-        if (opponentCards.Count == 0)
-        {
-            changescene.changeToScene("menu");
-        }
     }
 
-    private void playerOneWin(int cardWon)
+	private void checkForWinner()
+	{
+		GameObject manager = GameObject.Find("_Manager");
+		ChangeScene changescene = manager.GetComponent<ChangeScene>();
+
+		//Check for winner before turn is over
+		if (playerOneCards.Count == 0)
+		{
+			changescene.changeToScene("menu");
+		}
+		
+		if (opponentCards.Count == 0)
+		{
+			changescene.changeToScene("menu");
+		}
+	}
+
+    private void playerOneWin()
     {
         string tempCardHolder;
         lastHandWinner = "PlayerOne";
@@ -156,7 +164,7 @@ public class WarMain : MonoBehaviour {
         playerOneCards.Add(tempCardHolder);
     }
 
-    private void opponentWin(int cardWon)
+    private void opponentWin()
     {
         string tempCardHolder;
         lastHandWinner = "Opponent";
