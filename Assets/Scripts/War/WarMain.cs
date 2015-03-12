@@ -707,9 +707,4 @@ public class WarMain : MonoBehaviour {
         dealPlayerCards();
         cardToScreenPlayerOne();
 	}
-
-    void FixedUpdate()
-    {
-
-    }
 }

@@ -12,9 +12,10 @@ public class DisplayPlayButton : MonoBehaviour {
 		posX = transform.position.x;
 		posY = transform.position.y;
 	}
-
+    
     void OnMouseDown()
     {
+        
         //this if is added so opponents cards do not display play button when clicked
         if (posY < 0.0f)
         {
