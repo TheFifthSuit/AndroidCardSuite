@@ -53,11 +53,12 @@
      <Compile Include="Assets\Scripts\ClearHandResults.cs" />
      <Compile Include="Assets\Scripts\DeckObjects.cs" />
      <Compile Include="Assets\Scripts\DisplayPlayButton.cs" />
-     <Compile Include="Assets\Scripts\Draggable.cs" />
      <Compile Include="Assets\Scripts\EuchreMain.cs" />
+     <Compile Include="Assets\Scripts\Hit.cs" />
      <Compile Include="Assets\Scripts\PlayCard.cs" />
      <Compile Include="Assets\Scripts\Quit.cs" />
      <Compile Include="Assets\Scripts\ScoreTracking.cs" />
+     <Compile Include="Assets\Scripts\Stand.cs" />
      <Compile Include="Assets\Scripts\WarMain.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.2/UnityEngine.UI.dll</HintPath>
