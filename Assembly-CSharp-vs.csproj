@@ -49,6 +49,8 @@
      <Compile Include="Assets\Scripts\BlackJack\BlackjackMain.cs" />
      <Compile Include="Assets\Scripts\Draggable.cs" />
      <Compile Include="Assets\Scripts\Euchre\EuchreMain.cs" />
+     <Compile Include="Assets\Scripts\Hit.cs" />
+     <Compile Include="Assets\Scripts\Stand.cs" />
      <Compile Include="Assets\Scripts\War\CardValue.cs" />
      <Compile Include="Assets\Scripts\War\ChangeScene.cs" />
      <Compile Include="Assets\Scripts\War\ClearBoard.cs" />

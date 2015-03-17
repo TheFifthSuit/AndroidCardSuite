@@ -12,26 +12,42 @@ public class BlackjackMain : MonoBehaviour {
     public Text playerScoreText;
     public Text opponentScoreText;
     public string lastHandWinner = "";
-    
+	public bool stand = false;
+
+	//tracking total and how many cards are in the hand
+	int playerOneTotal = 0;
+	int playerOneIndex = 0;
+
+	int opponentTotal = 0;
+	int opponentIndex = 0;
+
+	// will be used to hide and show buttons
+	GameObject restartButton;
+	GameObject hitButton;
+	GameObject standButton;
+	GameObject mainButton;
+	
     //card names within deck should match Prefab names should have seperate prefab for all 52 cards
 	string[] cardDeck = new string[] {"twoH", "threeH", "fourH", "fiveH", "sixH", "sevenH", "eightH", "nineH", "tenH", "jackH", "queenH", "kingH", "aceH", 
 									  "twoD", "threeD", "fourD", "fiveD", "sixD", "sevenD", "eightD", "nineD", "tenD", "jackD", "queenD", "kingD", "aceD", 
 									  "twoC", "threeC", "fourC", "fiveC", "sixC", "sevenC", "eightC", "nineC", "tenC", "jackC", "queenC", "kingC", "aceC",
 									  "twoS", "threeS", "fourS", "fiveS", "sixS", "sevenS", "eightS", "nineS", "tenS", "jackS", "queenS", "kingS", "aceS"};
 
-	//list of each players 26 cards they randomly got to use for this game
+	//list of each players hands and the cards delt
 	List<string> playerOneCards = new List<string>();
 	List<string> opponentCards = new List<string>();
+	List<int> dealtCards = new List<int>();
 
 
+
+	// deals 2 random cards to player and opponent adds the cards to delt deck
 	private void dealPlayerCards ()
 	{
-		List<int> dealtCards = new List<int>();
-
-		for (int i = 0; i <= 25; i++) 
+		
+		for (int i = 0; i <= 1; i++) 
 		{
 			int drawnCard = Random.Range(0, 52);
-
+			
 			if(dealtCards.IndexOf(drawnCard) == -1)
 			{
 				playerOneCards.Add(cardDeck[drawnCard]);
@@ -42,8 +58,8 @@ public class BlackjackMain : MonoBehaviour {
 				i--;
 			}
 		}
-
-		for (int i = 0; i <= 25; i++) 
+		
+		for (int i = 0; i <= 1; i++) 
 		{
 			int drawnCard = Random.Range(0, 52);
 			
@@ -62,122 +78,131 @@ public class BlackjackMain : MonoBehaviour {
     
     public void processturn()
     {
+
 		GameObject manager = GameObject.Find("_Manager");
-		ChangeScene changescene = manager.GetComponent<ChangeScene>();
+        //ChangeScene changescene = manager.GetComponent<ChangeScene>();
 
-		//player one wins turn over opponent
-        //must add opponents card to player ones deck. Also must take players ones card they just played and add it to back of deck
-        if(getCardValue(playerOneCards[0]) > getCardValue(opponentCards[0]))
-        {
-            playerOneWin();
-			checkForWinner();
-			return;
+		//checking the each players array and for each card add value to total
+		for(int i = 0; i != playerOneCards.Count; i++)
+		{
+			playerOneTotal = playerOneTotal + getCardValue(playerOneCards[i]);
+			playerOneIndex++;
 		}
-        //opponent wins turn
-        else if (getCardValue(playerOneCards[0]) < getCardValue(opponentCards[0]))
-        {
-            opponentWin();
-			checkForWinner();
-			return;
-        }
 
-        //WARRRRRRR!!!!
-        //laying one more card face down then playing next card after that
-        if (getCardValue(playerOneCards[0]) == getCardValue(opponentCards[0]))
-        {
-            int i = 0;
-            string winner = "none";
-
-            while (winner == "none")
-            {
-                //war occuring going to need to visually show this
-
-                i = i + 2;
-
-                if (playerOneCards[i] == null && playerOneCards.Count < opponentCards.Count)
+		for(int i = 0; i != opponentCards.Count; i++)
+		{
+			opponentTotal = opponentTotal + getCardValue(opponentCards[i]);
+			opponentIndex++;
+			if (opponentTotal < 15 && opponentTotal < playerOneTotal)
+			{
+				for (int x = 0; x <= 0; x++) 
 				{
-					changescene.changeToScene("menu");
+					int drawnCard = Random.Range(0, 52);
+					
+					if(dealtCards.IndexOf(drawnCard) == -1)
+					{
+						opponentCards.Add(cardDeck[drawnCard]);
+						dealtCards.Add(drawnCard);
+					}
+					else
+					{
+						x--;
+					}
 				}
+			}
+		}
 
-				if (opponentCards[i] == null && playerOneCards.Count > opponentCards.Count)
-				{
-					changescene.changeToScene("menu");
-				}
-				         
-                if (getCardValue(playerOneCards[i]) > getCardValue(opponentCards[i]))
-                {
-                	winner = "playerone";
-            	}
-            	if (getCardValue(playerOneCards[i]) < getCardValue(opponentCards[i]))
-            	{
-                	winner = "opponent";
-            	}
-       		}
 
-            if (winner == "playerone")
-            {
-                for (int x = 0; x <= i; x++)
-                {
-                    playerOneWin();
-                }
-            }
+		updateScore(); 
 
-            if (winner == "opponent")
-            {
-                for (int x = 0; x <= i; x++)
-                {
-                    opponentWin();
-                }
-            }
-        }
     }
 
 	private void checkForWinner()
 	{
 		GameObject manager = GameObject.Find("_Manager");
-		ChangeScene changescene = manager.GetComponent<ChangeScene>();
+    	ChangeScene changescene = manager.GetComponent<ChangeScene>();
 
 		//Check for winner before turn is over
-		if (playerOneCards.Count == 0)
+
+		if (playerOneTotal > 21)
 		{
-			changescene.changeToScene("menu");
+			print("You Bust");
+
+			restartButton.SetActive(true);
+			mainButton.SetActive(true);
+
+			hitButton.SetActive (false);
+			standButton.SetActive (false);
 		}
-		
-		if (opponentCards.Count == 0)
+
+		if (playerOneTotal == 21)
 		{
-			changescene.changeToScene("menu");
+			print("You Win");
+			
+			restartButton.SetActive(true);
+			mainButton.SetActive(true);
+
+			hitButton.SetActive (false);
+			standButton.SetActive (false);
+
 		}
+		if (stand == true) 
+		{
+
+			if (playerOneTotal < 21)
+			{
+				if (opponentTotal > 21)
+				{
+					print("You beat the AI");
+					
+					restartButton.SetActive(true);
+					mainButton.SetActive(true);
+					
+					hitButton.SetActive (false);
+					standButton.SetActive (false);
+				}
+				else {
+				if (playerOneTotal > opponentTotal)
+				{
+					print("you beat the AI");
+					
+					restartButton.SetActive(true);
+					mainButton.SetActive(true);
+					
+					hitButton.SetActive (false);
+					standButton.SetActive (false);
+				}
+
+				if (playerOneTotal < opponentTotal)
+				{
+					print("the AI beat you");
+					
+					restartButton.SetActive(true);
+					mainButton.SetActive(true);
+					
+					hitButton.SetActive (false);
+					standButton.SetActive (false);
+				}
+
+				if (playerOneTotal == opponentTotal)
+				{
+					print("You Have the same score");
+					
+					restartButton.SetActive(true);
+					mainButton.SetActive(true);
+					
+					hitButton.SetActive (false);
+					standButton.SetActive (false);
+				}
+				}
+				
+			}
+
+		}
+
+
+
 	}
-
-    private void playerOneWin()
-    {
-        string tempCardHolder;
-        lastHandWinner = "PlayerOne";
-
-        //adding opponents card that was won to back of player ones deck.
-        playerOneCards.Add(opponentCards[0]);
-        opponentCards.RemoveAt(0);
-
-        //moving played card to back of deck
-        tempCardHolder = playerOneCards[0];
-        playerOneCards.RemoveAt(0);
-        playerOneCards.Add(tempCardHolder);
-    }
-
-    private void opponentWin()
-    {
-        string tempCardHolder;
-        lastHandWinner = "Opponent";
-
-        //adding player ones card that was won to back of opponents deck.
-        opponentCards.Add(playerOneCards[0]);
-        playerOneCards.RemoveAt(0);
-
-        //moving played card to back of deck
-        tempCardHolder = opponentCards[0];
-        opponentCards.RemoveAt(0);
-        opponentCards.Add(tempCardHolder);
-    }
 
 
     private int getCardValue(string card)
@@ -222,19 +247,19 @@ public class BlackjackMain : MonoBehaviour {
         }
         if (card.Contains("jack"))
         {
-            cardValue = 11;
+            cardValue = 10;
         }
         if(card.Contains("queen"))
         {
-            cardValue = 12;
+            cardValue = 10;
         }
         if(card.Contains("king"))
         {
-            cardValue = 13;
+            cardValue = 10;
         }
         if(card.Contains("ace"))
         {
-            cardValue = 14;
+            cardValue = 11;
         }
 
         return cardValue;
@@ -245,8 +270,11 @@ public class BlackjackMain : MonoBehaviour {
         GameObject manager = GameObject.Find("_Manager");
         DeckObjects deckobjects = manager.GetComponent<DeckObjects>();
 
+
+		for(int i = 0; i != playerOneCards.Count; i++)
+		{
         #region switch statement player one
-        switch (playerOneCards[0])
+        switch (playerOneCards[i])
         {
             case "twoH":
                 Instantiate(deckobjects.twoH, new Vector3(0, -2, 0), Quaternion.identity);
@@ -462,7 +490,7 @@ public class BlackjackMain : MonoBehaviour {
                 Instantiate(deckobjects.aceS, new Vector3(0, -2, 0), Quaternion.identity);
                 lastCardPlayedPlayerOne = "aceS";
                 break;
-        }
+			}}
         #endregion
     }
 
@@ -471,241 +499,310 @@ public class BlackjackMain : MonoBehaviour {
         GameObject manager = GameObject.Find("_Manager");
         DeckObjects deckobjects = manager.GetComponent<DeckObjects>();
         
-        #region switch statement opponent
-        switch (opponentCards[0])
-        {
-            case "twoH":
-                Instantiate(deckobjects.twoH, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "twoH";
-                break;
-            case "threeH":
-                Instantiate(deckobjects.threeH, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "threeH";
-                break;
-            case "fourH":
-                Instantiate(deckobjects.fourH, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "fourH";
-                break;
-            case "fiveH":
-                Instantiate(deckobjects.fiveH, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "fiveH";
-                break;
-            case "sixH":
-                Instantiate(deckobjects.sixH, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "sixH";
-                break;
-            case "sevenH":
-                Instantiate(deckobjects.sevenH, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "sevenH";
-                break;
-            case "eightH":
-                Instantiate(deckobjects.eightH, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "eightH";
-                break;
-            case "nineH":
-                Instantiate(deckobjects.nineH, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "nineH";
-                break;
-            case "tenH":
-                Instantiate(deckobjects.tenH, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "tenH";
-                break;
-            case "jackH":
-                Instantiate(deckobjects.jackH, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "jackH";
-                break;
-            case "queenH":
-                Instantiate(deckobjects.queenH, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "queenH";
-                break;
-            case "kingH":
-                Instantiate(deckobjects.kingH, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "kingH";
-                break;
-            case "aceH":
-                Instantiate(deckobjects.aceH, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "aceH";
-                break;
 
-            //Diamonds
-            case "twoD":
-                Instantiate(deckobjects.twoD, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "twoD";
-                break;
-            case "threeD":
-                Instantiate(deckobjects.threeD, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "threeD";
-                break;
-            case "fourD":
-                Instantiate(deckobjects.fourD, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "fourD";
-                break;
-            case "fiveD":
-                Instantiate(deckobjects.fiveD, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "fiveD";
-                break;
-            case "sixD":
-                Instantiate(deckobjects.sixD, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "sixD";
-                break;
-            case "sevenD":
-                Instantiate(deckobjects.sevenD, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "sevenD";
-                break;
-            case "eightD":
-                Instantiate(deckobjects.eightD, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "eightD";
-                break;
-            case "nineD":
-                Instantiate(deckobjects.nineD, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "nineD";
-                break;
-            case "tenD":
-                Instantiate(deckobjects.tenD, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "tenD";
-                break;
-            case "jackD":
-                Instantiate(deckobjects.jackD, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "jackD";
-                break;
-            case "queenD":
-                Instantiate(deckobjects.queenD, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "queenD";
-                break;
-            case "kingD":
-                Instantiate(deckobjects.kingD, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "kingD";
-                break;
-            case "aceD":
-                Instantiate(deckobjects.aceD, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "aceD";
-                break;
+		for (int i = 0; i != opponentCards.Count; i++) {
+			#region switch statement opponent
+			switch (opponentCards [i]) {
+			case "twoH":
+				Instantiate (deckobjects.twoH, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "twoH";
+				break;
+			case "threeH":
+				Instantiate (deckobjects.threeH, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "threeH";
+				break;
+			case "fourH":
+				Instantiate (deckobjects.fourH, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "fourH";
+				break;
+			case "fiveH":
+				Instantiate (deckobjects.fiveH, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "fiveH";
+				break;
+			case "sixH":
+				Instantiate (deckobjects.sixH, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "sixH";
+				break;
+			case "sevenH":
+				Instantiate (deckobjects.sevenH, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "sevenH";
+				break;
+			case "eightH":
+				Instantiate (deckobjects.eightH, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "eightH";
+				break;
+			case "nineH":
+				Instantiate (deckobjects.nineH, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "nineH";
+				break;
+			case "tenH":
+				Instantiate (deckobjects.tenH, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "tenH";
+				break;
+			case "jackH":
+				Instantiate (deckobjects.jackH, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "jackH";
+				break;
+			case "queenH":
+				Instantiate (deckobjects.queenH, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "queenH";
+				break;
+			case "kingH":
+				Instantiate (deckobjects.kingH, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "kingH";
+				break;
+			case "aceH":
+				Instantiate (deckobjects.aceH, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "aceH";
+				break;
 
-            //Clubs
-            case "twoC":
-                Instantiate(deckobjects.twoC, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "twoC";
-                break;
-            case "threeC":
-                Instantiate(deckobjects.threeC, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "threeC";
-                break;
-            case "fourC":
-                Instantiate(deckobjects.fourC, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "fourC";
-                break;
-            case "fiveC":
-                Instantiate(deckobjects.fiveC, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "fiveC";
-                break;
-            case "sixC":
-                Instantiate(deckobjects.sixC, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "sixC";
-                break;
-            case "sevenC":
-                Instantiate(deckobjects.sevenC, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "sevenC";
-                break;
-            case "eightC":
-                Instantiate(deckobjects.eightC, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "eightC";
-                break;
-            case "nineC":
-                Instantiate(deckobjects.nineC, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "nineC";
-                break;
-            case "tenC":
-                Instantiate(deckobjects.tenC, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "tenC";
-                break;
-            case "jackC":
-                Instantiate(deckobjects.jackC, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "jackC";
-                break;
-            case "queenC":
-                Instantiate(deckobjects.queenC, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "queenC";
-                break;
-            case "kingC":
-                Instantiate(deckobjects.kingC, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "kingC";
-                break;
-            case "aceC":
-                Instantiate(deckobjects.aceC, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "aceC";
-                break;
+			//Diamonds
+			case "twoD":
+				Instantiate (deckobjects.twoD, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "twoD";
+				break;
+			case "threeD":
+				Instantiate (deckobjects.threeD, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "threeD";
+				break;
+			case "fourD":
+				Instantiate (deckobjects.fourD, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "fourD";
+				break;
+			case "fiveD":
+				Instantiate (deckobjects.fiveD, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "fiveD";
+				break;
+			case "sixD":
+				Instantiate (deckobjects.sixD, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "sixD";
+				break;
+			case "sevenD":
+				Instantiate (deckobjects.sevenD, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "sevenD";
+				break;
+			case "eightD":
+				Instantiate (deckobjects.eightD, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "eightD";
+				break;
+			case "nineD":
+				Instantiate (deckobjects.nineD, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "nineD";
+				break;
+			case "tenD":
+				Instantiate (deckobjects.tenD, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "tenD";
+				break;
+			case "jackD":
+				Instantiate (deckobjects.jackD, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "jackD";
+				break;
+			case "queenD":
+				Instantiate (deckobjects.queenD, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "queenD";
+				break;
+			case "kingD":
+				Instantiate (deckobjects.kingD, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "kingD";
+				break;
+			case "aceD":
+				Instantiate (deckobjects.aceD, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "aceD";
+				break;
 
-            //Spades
-            case "twoS":
-                Instantiate(deckobjects.twoS, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "twoS";
-                break;
-            case "threeS":
-                Instantiate(deckobjects.threeS, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "threeS";
-                break;
-            case "fourS":
-                Instantiate(deckobjects.fourS, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "fourS";
-                break;
-            case "fiveS":
-                Instantiate(deckobjects.fiveS, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "fiveS";
-                break;
-            case "sixS":
-                Instantiate(deckobjects.sixS, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "sixS";
-                break;
-            case "sevenS":
-                Instantiate(deckobjects.sevenS, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "sevenS";
-                break;
-            case "eightS":
-                Instantiate(deckobjects.eightS, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "eightS";
-                break;
-            case "nineS":
-                Instantiate(deckobjects.nineS, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "nineS";
-                break;
-            case "tenS":
-                Instantiate(deckobjects.tenS, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "tenS";
-                break;
-            case "jackS":
-                Instantiate(deckobjects.jackS, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "jackS";
-                break;
-            case "queenS":
-                Instantiate(deckobjects.queenS, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "queenS";
-                break;
-            case "kingS":
-                Instantiate(deckobjects.kingS, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "kingS";
-                break;
-            case "aceS":
-                Instantiate(deckobjects.aceS, new Vector3(0, 2, 0), Quaternion.identity);
-                lastCardPlayedOpponent = "aceS";
-                break;
-        }
-        #endregion
+			//Clubs
+			case "twoC":
+				Instantiate (deckobjects.twoC, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "twoC";
+				break;
+			case "threeC":
+				Instantiate (deckobjects.threeC, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "threeC";
+				break;
+			case "fourC":
+				Instantiate (deckobjects.fourC, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "fourC";
+				break;
+			case "fiveC":
+				Instantiate (deckobjects.fiveC, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "fiveC";
+				break;
+			case "sixC":
+				Instantiate (deckobjects.sixC, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "sixC";
+				break;
+			case "sevenC":
+				Instantiate (deckobjects.sevenC, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "sevenC";
+				break;
+			case "eightC":
+				Instantiate (deckobjects.eightC, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "eightC";
+				break;
+			case "nineC":
+				Instantiate (deckobjects.nineC, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "nineC";
+				break;
+			case "tenC":
+				Instantiate (deckobjects.tenC, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "tenC";
+				break;
+			case "jackC":
+				Instantiate (deckobjects.jackC, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "jackC";
+				break;
+			case "queenC":
+				Instantiate (deckobjects.queenC, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "queenC";
+				break;
+			case "kingC":
+				Instantiate (deckobjects.kingC, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "kingC";
+				break;
+			case "aceC":
+				Instantiate (deckobjects.aceC, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "aceC";
+				break;
+
+			//Spades
+			case "twoS":
+				Instantiate (deckobjects.twoS, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "twoS";
+				break;
+			case "threeS":
+				Instantiate (deckobjects.threeS, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "threeS";
+				break;
+			case "fourS":
+				Instantiate (deckobjects.fourS, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "fourS";
+				break;
+			case "fiveS":
+				Instantiate (deckobjects.fiveS, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "fiveS";
+				break;
+			case "sixS":
+				Instantiate (deckobjects.sixS, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "sixS";
+				break;
+			case "sevenS":
+				Instantiate (deckobjects.sevenS, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "sevenS";
+				break;
+			case "eightS":
+				Instantiate (deckobjects.eightS, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "eightS";
+				break;
+			case "nineS":
+				Instantiate (deckobjects.nineS, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "nineS";
+				break;
+			case "tenS":
+				Instantiate (deckobjects.tenS, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "tenS";
+				break;
+			case "jackS":
+				Instantiate (deckobjects.jackS, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "jackS";
+				break;
+			case "queenS":
+				Instantiate (deckobjects.queenS, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "queenS";
+				break;
+			case "kingS":
+				Instantiate (deckobjects.kingS, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "kingS";
+				break;
+			case "aceS":
+				Instantiate (deckobjects.aceS, new Vector3 (0, 2, 0), Quaternion.identity);
+				lastCardPlayedOpponent = "aceS";
+				break;
+			}
+			#endregion
+		}
     }
 
     public void updateScore()
     {
-        playerScoreText.text = "Player One Score: " + playerOneCards.Count;
-        opponentScoreText.text = "Opponents Score: " + opponentCards.Count;
+		playerScoreText.text = "Player One Score: " + playerOneTotal + " dealt Count " + dealtCards.Count;
+		opponentScoreText.text = "Opponents Score: " + opponentTotal;
         cardToScreenPlayerOne();
+		cardToScreenOpponent();
+
     }
+
+	public void Stand()
+	{
+		GameObject[] cardclones = GameObject.FindGameObjectsWithTag("Card");
+		foreach (GameObject clone in cardclones)
+		{
+			Destroy(clone);
+		}
+
+		stand = true;
+
+		updateScore ();
+		checkForWinner ();
+
+	}
+
+	public void Hit()
+	{
+		
+		for (int i = 0; i <= 0; i++) 
+		{
+			int drawnCard = Random.Range(0, 52);
+			
+			if(dealtCards.IndexOf(drawnCard) == -1)
+			{
+				playerOneCards.Add(cardDeck[drawnCard]);
+				dealtCards.Add(drawnCard);
+			}
+			else
+			{
+				i--;
+			}
+		}
+
+		
+		playerOneTotal = playerOneTotal + getCardValue(playerOneCards[playerOneIndex]);
+		playerOneIndex++;
+
+		//destroy all the cards on the table
+		GameObject[] cardclones = GameObject.FindGameObjectsWithTag("Card");
+		foreach (GameObject clone in cardclones)
+		{
+			Destroy(clone);
+		}
+		updateScore ();
+		checkForWinner ();
+	}
+
 
 
     // Use this for initialization
 	void Start () 
 	{
-        //processturn();
-        dealPlayerCards();
-        cardToScreenPlayerOne();
+
+		hitButton = GameObject.FindGameObjectWithTag("Hit");
+		hitButton.SetActive (true);
+
+		standButton = GameObject.FindGameObjectWithTag("Stand");
+		standButton.SetActive (true);
+
+		restartButton = GameObject.FindGameObjectWithTag("Restart");
+		restartButton.SetActive (false);
+
+		mainButton = GameObject.FindGameObjectWithTag("MainMenu");
+		mainButton.SetActive (false);
+
+
+
+		dealPlayerCards();      
+		processturn();
+
+
+
 	}
 
     void FixedUpdate()
