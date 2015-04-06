@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PlayCard : MonoBehaviour {
@@ -6,7 +6,7 @@ public class PlayCard : MonoBehaviour {
     public GameObject winMessage;
     public GameObject loseMessage;
     
-    void OnMouseDown()
+    public void playcard()
     {
         GameObject manager = GameObject.Find("_Manager");
         WarMain warmain = manager.GetComponent<WarMain>();
@@ -19,6 +19,6 @@ public class PlayCard : MonoBehaviour {
         if (warmain.lastHandWinner == "Opponent")
             Instantiate(loseMessage, new Vector3(0, 0, 0), Quaternion.identity);
 
-        GameObject.Destroy(this.gameObject);
+		warmain.removePlayButton ();
     }
 }

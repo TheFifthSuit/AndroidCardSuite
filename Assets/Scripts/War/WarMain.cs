@@ -12,6 +12,11 @@ public class WarMain : MonoBehaviour {
     public Text playerScoreText;
     public Text opponentScoreText;
     public string lastHandWinner = "";
+	public Button playButton;
+	public Text playButtonText;
+
+
+
     
     //card names within deck should match Prefab names should have seperate prefab for all 52 cards
 	string[] cardDeck = new string[] {"twoH", "threeH", "fourH", "fiveH", "sixH", "sevenH", "eightH", "nineH", "tenH", "jackH", "queenH", "kingH", "aceH", 
@@ -700,16 +705,47 @@ public class WarMain : MonoBehaviour {
     }
 
 
+	public void removePlayButton()
+	{
+		playButton.gameObject.SetActive (false);
+	}
+
+	public void setPlayButton(string cardClicked)
+	{
+		cardClicked = cardClicked.Replace ("(Clone)", "");
+		string cardSuit = cardClicked.Substring (cardClicked.Length - 1, 1);
+		string cardValue = cardClicked.Substring (0, cardClicked.Length - 1);
+
+		if (cardSuit == "H") 
+		{
+			cardSuit = "Hearts";
+		} 
+		else if (cardSuit == "D") 
+		{
+			cardSuit = "Diamonds";
+		}
+		else if (cardSuit == "C") 
+		{
+			cardSuit = "Clubs";
+		}
+		else if (cardSuit == "S") 
+		{
+			cardSuit = "Spades";
+		}
+
+
+
+		playButtonText.text = "Play " + cardValue + " of " + cardSuit;
+		playButton.gameObject.SetActive (true);
+
+	}
+
     // Use this for initialization
 	void Start () 
 	{
         //processturn();
+		removePlayButton ();
         dealPlayerCards();
         cardToScreenPlayerOne();
 	}
-
-    void FixedUpdate()
-    {
-
-    }
 }
