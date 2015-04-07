@@ -1,18 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Stand : MonoBehaviour {
-
+public class Hit : MonoBehaviour {
 
 	void OnClick()
 	{
-
 		GameObject manager = GameObject.Find("_Manager");
 		BlackjackMain bjmain = manager.GetComponent<BlackjackMain>();
 
-		bjmain.Stand();
-
+		bjmain.Hit();
 	}
-
-
 }
