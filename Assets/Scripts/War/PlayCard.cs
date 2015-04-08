@@ -11,7 +11,7 @@ public class PlayCard : MonoBehaviour {
         GameObject manager = GameObject.Find("_Manager");
         WarMain warmain = manager.GetComponent<WarMain>();
 
-        warmain.cardToScreenOpponent();
+        warmain.cardToScreenOpponent(0, 300);
         warmain.processturn();
 
         if(warmain.lastHandWinner == "PlayerOne")
