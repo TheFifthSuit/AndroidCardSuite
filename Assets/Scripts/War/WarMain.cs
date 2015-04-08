@@ -699,8 +699,8 @@ public class WarMain : MonoBehaviour {
 
     public void updateScore()
     {
-        playerScoreText.text = "Player One Score: " + playerOneCards.Count;
-        opponentScoreText.text = "Opponents Score: " + opponentCards.Count;
+        playerScoreText.text = "Your Score: " + playerOneCards.Count;
+        opponentScoreText.text = "Opponent Score: " + opponentCards.Count;
         cardToScreenPlayerOne(0, -300);
     }
 
