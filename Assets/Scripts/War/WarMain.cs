@@ -14,7 +14,8 @@ public class WarMain : MonoBehaviour {
     public string lastHandWinner = "";
 	public Button playButton;
 	public Text playButtonText;
-
+    public GameObject objectToAnimate;
+    public List<GameObject> objectsOnScreen = new List<GameObject>();
 
 
     
@@ -254,217 +255,217 @@ public class WarMain : MonoBehaviour {
         switch (playerOneCards[0])
         {
             case "twoH":
-                Instantiate(deckobjects.twoH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.twoH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "twoH";
                 break;
             case "threeH":
-                Instantiate(deckobjects.threeH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.threeH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "threeH";
                 break;
             case "fourH":
-                Instantiate(deckobjects.fourH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.fourH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "fourH";
                 break;
             case "fiveH":
-                Instantiate(deckobjects.fiveH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.fiveH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "fiveH";
                 break;
             case "sixH":
-                Instantiate(deckobjects.sixH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.sixH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "sixH";
                 break;
             case "sevenH":
-                Instantiate(deckobjects.sevenH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.sevenH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "sevenH";
                 break;
             case "eightH":
-                Instantiate(deckobjects.eightH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.eightH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "eightH";
                 break;
             case "nineH":
-                Instantiate(deckobjects.nineH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.nineH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "nineH";
                 break;
             case "tenH":
-                Instantiate(deckobjects.tenH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.tenH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "tenH";
                 break;
             case "jackH":
-                Instantiate(deckobjects.jackH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.jackH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "jackH";
                 break;
             case "queenH":
-                Instantiate(deckobjects.queenH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.queenH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "queenH";
                 break;
             case "kingH":
-                Instantiate(deckobjects.kingH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.kingH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "kingH";
                 break;
             case "aceH":
-                Instantiate(deckobjects.aceH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.aceH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "aceH";
                 break;
             
             //Diamonds
             case "twoD":
-                Instantiate(deckobjects.twoD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.twoD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "twoD";
                 break;
             case "threeD":
-                Instantiate(deckobjects.threeD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.threeD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "threeD";
                 break;
             case "fourD":
-                Instantiate(deckobjects.fourD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.fourD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "fourD";
                 break;
             case "fiveD":
-                Instantiate(deckobjects.fiveD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.fiveD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "fiveD";
                 break;
             case "sixD":
-                Instantiate(deckobjects.sixD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.sixD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "sixD";
                 break;
             case "sevenD":
-                Instantiate(deckobjects.sevenD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.sevenD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "sevenD";
                 break;
             case "eightD":
-                Instantiate(deckobjects.eightD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.eightD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "eightD";
                 break;
             case "nineD":
-                Instantiate(deckobjects.nineD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.nineD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "nineD";
                 break;
             case "tenD":
-                Instantiate(deckobjects.tenD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.tenD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "tenD";
                 break;
             case "jackD":
-                Instantiate(deckobjects.jackD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.jackD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "jackD";
                 break;
             case "queenD":
-                Instantiate(deckobjects.queenD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.queenD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "queenD";
                 break;
             case "kingD":
-                Instantiate(deckobjects.kingD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.kingD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "kingD";
                 break;
             case "aceD":
-                Instantiate(deckobjects.aceD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.aceD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "aceD";
                 break;
 
             //Clubs
             case "twoC":
-                Instantiate(deckobjects.twoC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.twoC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "twoC";
                 break;
             case "threeC":
-                Instantiate(deckobjects.threeC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.threeC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "threeC";
                 break;
             case "fourC":
-                Instantiate(deckobjects.fourC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.fourC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "fourC";
                 break;
             case "fiveC":
-                Instantiate(deckobjects.fiveC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.fiveC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "fiveC";
                 break;
             case "sixC":
-                Instantiate(deckobjects.sixC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.sixC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "sixC";
                 break;
             case "sevenC":
-                Instantiate(deckobjects.sevenC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.sevenC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "sevenC";
                 break;
             case "eightC":
-                Instantiate(deckobjects.eightC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.eightC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "eightC";
                 break;
             case "nineC":
-                Instantiate(deckobjects.nineC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.nineC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "nineC";
                 break;
             case "tenC":
-                Instantiate(deckobjects.tenC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.tenC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "tenC";
                 break;
             case "jackC":
-                Instantiate(deckobjects.jackC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.jackC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "jackC";
                 break;
             case "queenC":
-                Instantiate(deckobjects.queenC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.queenC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "queenC";
                 break;
             case "kingC":
-                Instantiate(deckobjects.kingC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.kingC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "kingC";
                 break;
             case "aceC":
-                Instantiate(deckobjects.aceC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.aceC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "aceC";
                 break;
 
             //Spades
             case "twoS":
-                Instantiate(deckobjects.twoS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.twoS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "twoS";
                 break;
             case "threeS":
-                Instantiate(deckobjects.threeS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.threeS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "threeS";
                 break;
             case "fourS":
-                Instantiate(deckobjects.fourS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.fourS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "fourS";
                 break;
             case "fiveS":
-                Instantiate(deckobjects.fiveS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.fiveS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "fiveS";
                 break;
             case "sixS":
-                Instantiate(deckobjects.sixS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.sixS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "sixS";
                 break;
             case "sevenS":
-                Instantiate(deckobjects.sevenS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.sevenS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "sevenS";
                 break;
             case "eightS":
-                Instantiate(deckobjects.eightS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.eightS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "eightS";
                 break;
             case "nineS":
-                Instantiate(deckobjects.nineS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.nineS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "nineS";
                 break;
             case "tenS":
-                Instantiate(deckobjects.tenS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.tenS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "tenS";
                 break;
             case "jackS":
-                Instantiate(deckobjects.jackS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.jackS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "jackS";
                 break;
             case "queenS":
-                Instantiate(deckobjects.queenS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.queenS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "queenS";
                 break;
             case "kingS":
-                Instantiate(deckobjects.kingS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.kingS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "kingS";
                 break;
             case "aceS":
-                Instantiate(deckobjects.aceS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                Instantiate(deckobjects.aceS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation);
                 lastCardPlayedPlayerOne = "aceS";
                 break;
         }
@@ -475,222 +476,222 @@ public class WarMain : MonoBehaviour {
     {
         GameObject manager = GameObject.Find("_Manager");
         DeckObjects deckobjects = manager.GetComponent<DeckObjects>();
-        
+
         #region switch statement opponent
         switch (opponentCards[0])
         {
             case "twoH":
-                Instantiate(deckobjects.twoH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.twoH, new Vector3(xPosition, yPosition, 0), Quaternion.identity) as GameObject;
                 lastCardPlayedOpponent = "twoH";
                 break;
             case "threeH":
-                Instantiate(deckobjects.threeH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.threeH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "threeH";
                 break;
             case "fourH":
-                Instantiate(deckobjects.fourH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.fourH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "fourH";
                 break;
             case "fiveH":
-                Instantiate(deckobjects.fiveH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.fiveH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "fiveH";
                 break;
             case "sixH":
-                Instantiate(deckobjects.sixH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.sixH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation)as GameObject;
                 lastCardPlayedOpponent = "sixH";
                 break;
             case "sevenH":
-                Instantiate(deckobjects.sevenH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.sevenH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "sevenH";
                 break;
             case "eightH":
-                Instantiate(deckobjects.eightH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.eightH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "eightH";
                 break;
             case "nineH":
-                Instantiate(deckobjects.nineH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.nineH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "nineH";
                 break;
             case "tenH":
-                Instantiate(deckobjects.tenH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.tenH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "tenH";
                 break;
             case "jackH":
-                Instantiate(deckobjects.jackH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.jackH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "jackH";
                 break;
             case "queenH":
-                Instantiate(deckobjects.queenH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.queenH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "queenH";
                 break;
             case "kingH":
-                Instantiate(deckobjects.kingH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.kingH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "kingH";
                 break;
             case "aceH":
-                Instantiate(deckobjects.aceH, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.aceH, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "aceH";
                 break;
 
             //Diamonds
             case "twoD":
-                Instantiate(deckobjects.twoD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.twoD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "twoD";
                 break;
             case "threeD":
-                Instantiate(deckobjects.threeD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.threeD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "threeD";
                 break;
             case "fourD":
-                Instantiate(deckobjects.fourD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.fourD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "fourD";
                 break;
             case "fiveD":
-                Instantiate(deckobjects.fiveD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.fiveD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "fiveD";
                 break;
             case "sixD":
-                Instantiate(deckobjects.sixD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.sixD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "sixD";
                 break;
             case "sevenD":
-                Instantiate(deckobjects.sevenD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.sevenD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "sevenD";
                 break;
             case "eightD":
-                Instantiate(deckobjects.eightD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.eightD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "eightD";
                 break;
             case "nineD":
-                Instantiate(deckobjects.nineD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.nineD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "nineD";
                 break;
             case "tenD":
-                Instantiate(deckobjects.tenD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.tenD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "tenD";
                 break;
             case "jackD":
-                Instantiate(deckobjects.jackD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.jackD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "jackD";
                 break;
             case "queenD":
-                Instantiate(deckobjects.queenD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.queenD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "queenD";
                 break;
             case "kingD":
-                Instantiate(deckobjects.kingD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.kingD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "kingD";
                 break;
             case "aceD":
-                Instantiate(deckobjects.aceD, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.aceD, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "aceD";
                 break;
 
             //Clubs
             case "twoC":
-                Instantiate(deckobjects.twoC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.twoC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "twoC";
                 break;
             case "threeC":
-                Instantiate(deckobjects.threeC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.threeC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "threeC";
                 break;
             case "fourC":
-                Instantiate(deckobjects.fourC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.fourC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "fourC";
                 break;
             case "fiveC":
-                Instantiate(deckobjects.fiveC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.fiveC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "fiveC";
                 break;
             case "sixC":
-                Instantiate(deckobjects.sixC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.sixC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "sixC";
                 break;
             case "sevenC":
-                Instantiate(deckobjects.sevenC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.sevenC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "sevenC";
                 break;
             case "eightC":
-                Instantiate(deckobjects.eightC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.eightC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "eightC";
                 break;
             case "nineC":
-                Instantiate(deckobjects.nineC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.nineC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "nineC";
                 break;
             case "tenC":
-                Instantiate(deckobjects.tenC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.tenC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "tenC";
                 break;
             case "jackC":
-                Instantiate(deckobjects.jackC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.jackC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "jackC";
                 break;
             case "queenC":
-                Instantiate(deckobjects.queenC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.queenC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "queenC";
                 break;
             case "kingC":
-                Instantiate(deckobjects.kingC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.kingC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "kingC";
                 break;
             case "aceC":
-                Instantiate(deckobjects.aceC, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.aceC, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "aceC";
                 break;
 
             //Spades
             case "twoS":
-                Instantiate(deckobjects.twoS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.twoS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "twoS";
                 break;
             case "threeS":
-                Instantiate(deckobjects.threeS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.threeS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "threeS";
                 break;
             case "fourS":
-                Instantiate(deckobjects.fourS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.fourS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "fourS";
                 break;
             case "fiveS":
-                Instantiate(deckobjects.fiveS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.fiveS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "fiveS";
                 break;
             case "sixS":
-                Instantiate(deckobjects.sixS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.sixS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "sixS";
                 break;
             case "sevenS":
-                Instantiate(deckobjects.sevenS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.sevenS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "sevenS";
                 break;
             case "eightS":
-                Instantiate(deckobjects.eightS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.eightS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "eightS";
                 break;
             case "nineS":
-                Instantiate(deckobjects.nineS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.nineS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "nineS";
                 break;
             case "tenS":
-                Instantiate(deckobjects.tenS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.tenS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "tenS";
                 break;
             case "jackS":
-                Instantiate(deckobjects.jackS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.jackS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "jackS";
                 break;
             case "queenS":
-                Instantiate(deckobjects.queenS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.queenS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "queenS";
                 break;
             case "kingS":
-                Instantiate(deckobjects.kingS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.kingS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "kingS";
                 break;
             case "aceS":
-                Instantiate(deckobjects.aceS, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+                objectToAnimate = Instantiate(deckobjects.aceS, new Vector3(xPosition, yPosition, 0), deckobjects.twoH.transform.rotation) as GameObject;
                 lastCardPlayedOpponent = "aceS";
                 break;
         }
@@ -743,7 +744,6 @@ public class WarMain : MonoBehaviour {
     // Use this for initialization
 	void Start () 
 	{
-        //processturn();
 		removePlayButton ();
         dealPlayerCards();
         cardToScreenPlayerOne(0, -300);

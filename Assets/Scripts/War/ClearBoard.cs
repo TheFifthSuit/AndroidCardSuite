@@ -22,6 +22,15 @@ public class ClearBoard : MonoBehaviour {
         GameObject manager = GameObject.Find("_Manager");
         WarMain warmain = manager.GetComponent<WarMain>();
 
-        warmain.updateScore();
+        if (Application.loadedLevelName == "War")
+        {
+            warmain.updateScore();
+        }
+        else if (Application.loadedLevelName == "Blackjack")
+        {
+            GameObject manager1 = GameObject.Find("_Manager");
+            BlackjackMain bjmain = manager1.GetComponent<BlackjackMain>();
+            bjmain.nextHand();
+        }
     }
 }
