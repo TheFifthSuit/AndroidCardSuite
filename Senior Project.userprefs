@@ -1,28 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\War\PlayCard.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\BlackJack\BlackjackMain.cs">
     <Files>
-      <File FileName="Assets\Scripts\War\WarMain.cs" Line="735" Column="1" />
-      <File FileName="Assets\Scripts\BlackJack\BlackjackMain.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\War\DisplayPlayButton.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\War\PlayCard.cs" Line="22" Column="31" />
+      <File FileName="Assets\Scripts\BlackJack\BlackjackMain.cs" Line="147" Column="50" />
+      <File FileName="Assets\Scripts\War\Animate.cs" Line="1" Column="1" />
     </Files>
     <Pads>
-      <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Assembly-CSharp" expanded="True">
-            <Node name="Scripts" expanded="True">
-              <Node name="BlackJack" expanded="True" />
-              <Node name="War" expanded="True">
-                <Node name="PlayCard.cs" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="ClassPad">
-        <State selected="True" />
-      </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
           <Value>playerOneCards</Value>
@@ -34,6 +17,8 @@
           <Value>opponentCards[i]</Value>
           <Value>i</Value>
           <Value>winner</Value>
+          <Value>objectsOnScreen</Value>
+          <Value>obj.transform.localRotation.y</Value>
         </State>
       </Pad>
     </Pads>
@@ -43,6 +28,13 @@
       <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\PlayCard.cs" line="26" />
       <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\PlayCard.cs" line="27" />
       <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\PlayCard.cs" line="28" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\War\PlayCard.cs" line="13" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\War\PlayCard.cs" line="18" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\War\PlayCard.cs" line="23" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\War\PlayCard.cs" line="31" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\War\WarMain.cs" line="701" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\BlackJack\BlackjackMain.cs" line="246" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\BlackJack\BlackjackMain.cs" line="144" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

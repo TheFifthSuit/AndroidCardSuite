@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{92BCC1EB-107F-0C79-B19E-DD2758D9C840}</ProjectGuid>
+	<ProjectGuid>{4C6B7DF0-20F1-8F65-940F-50AF3DFFCAFF}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -49,16 +49,17 @@
      <Compile Include="Assets\Scripts\BlackJack\BlackjackMain.cs" />
      <Compile Include="Assets\Scripts\BlackJack\Hit.cs" />
      <Compile Include="Assets\Scripts\BlackJack\Stand.cs" />
+     <Compile Include="Assets\Scripts\Euchre\Discard.cs" />
      <Compile Include="Assets\Scripts\Euchre\EuchreMain.cs" />
-     <Compile Include="Assets\Scripts\War\CardValue.cs" />
+     <Compile Include="Assets\Scripts\Euchre\MakeTrump.cs" />
+     <Compile Include="Assets\Scripts\Euchre\PassTrump.cs" />
+     <Compile Include="Assets\Scripts\War\Animate.cs" />
      <Compile Include="Assets\Scripts\War\ChangeScene.cs" />
      <Compile Include="Assets\Scripts\War\ClearBoard.cs" />
      <Compile Include="Assets\Scripts\War\ClearHandResults.cs" />
      <Compile Include="Assets\Scripts\War\DeckObjects.cs" />
-     <Compile Include="Assets\Scripts\War\DisplayPlayButton.cs" />
      <Compile Include="Assets\Scripts\War\PlayCard.cs" />
      <Compile Include="Assets\Scripts\War\Quit.cs" />
-     <Compile Include="Assets\Scripts\War\ScoreTracking.cs" />
      <Compile Include="Assets\Scripts\War\WarMain.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.2/UnityEngine.UI.dll</HintPath>
