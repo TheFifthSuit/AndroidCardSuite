@@ -15,12 +15,8 @@ public class PlayCard : MonoBehaviour {
         WarMain warmain = manager.GetComponent<WarMain>();
         warmain.cardToScreenOpponent(0, 300);
 
-<<<<<<< HEAD
         Animate animateScript = warmain.objectToAnimate.GetComponent<Animate>();
-        animateScript.playAnimation(warmain.objectToAnimate);
-=======
-        warmain.cardToScreenOpponent(0, 300);
->>>>>>> f9ca9b539ed3444388666804bb67b0504376cebc
+//        animateScript.playAnimation(warmain.objectToAnimate);
         warmain.processturn();
 
         if (warmain.lastHandWinner == "PlayerOne")

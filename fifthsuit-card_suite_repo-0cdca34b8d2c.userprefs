@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\War\Animate.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Euchre\EuchreMain.cs" Line="285" Column="29" />
+      <File FileName="Assets\Scripts\War\Animate.cs" Line="45" Column="22" />
+      <File FileName="Assets\Scripts\War\PlayCard.cs" Line="19" Column="3" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

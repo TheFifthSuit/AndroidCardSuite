@@ -6,15 +6,29 @@ Direct3D:
     Vendor:   NVIDIA
     VRAM:     1988 MB
 Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\User\Documents\card_suite_repo\card_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\User\Documents\card_suite_repo\card_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\User\Documents\card_suite_repo\card_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\User\Documents\card_suite_repo\card_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\User\Documents\card_suite_repo\card_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\User\Documents\card_suite_repo\card_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.042 seconds
+Platform assembly: C:\Users\User\Documents\fifthsuit-card_suite_repo-0cdca34b8d2c\card_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\User\Documents\fifthsuit-card_suite_repo-0cdca34b8d2c\card_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\User\Documents\fifthsuit-card_suite_repo-0cdca34b8d2c\card_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\User\Documents\fifthsuit-card_suite_repo-0cdca34b8d2c\card_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\User\Documents\fifthsuit-card_suite_repo-0cdca34b8d2c\card_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\User\Documents\fifthsuit-card_suite_repo-0cdca34b8d2c\card_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.055 seconds
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 XInput1_3.dll not found.
 <RI> Input initialized.
-Waiting for finish
+Platform assembly: C:\Users\User\Documents\fifthsuit-card_suite_repo-0cdca34b8d2c\card_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\User\Documents\fifthsuit-card_suite_repo-0cdca34b8d2c\card_Data\Managed\System.dll (this message is harmless)
+UnloadTime: 6.203532 ms
+System memory in use before: 18.8 MB.
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 18.6 MB.
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 541.
+Total: 0.546112 ms (FindLiveObjects: 0.014112 ms CreateObjectMapping: 0.008125 ms MarkObjects: 0.145401 ms  DeleteObjects: 0.005131 ms)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at BlackjackMain.Start () [0x00010] in C:\Users\User\Documents\card_suite_repo\Assets\Scripts\BlackjackMain.cs:810 
+ 
+(Filename: C:/Users/User/Documents/card_suite_repo/Assets/Scripts/BlackjackMain.cs Line: 810)
+
