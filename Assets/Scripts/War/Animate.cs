@@ -12,6 +12,7 @@ public class Animate : MonoBehaviour {
     private bool opponentOne = false;
     private bool opponentTwo = false;
     private int clickCounter = 0;
+    private bool isPlayerOneCard;
 
     
     void OnMouseDown()
@@ -28,6 +29,47 @@ public class Animate : MonoBehaviour {
 
         if (Application.loadedLevelName == "Euchre")
         {
+            
+            //check to see if we have 6 cards or not if so need to discard
+            if (emain.playerOneCards.Count == 6)
+            {
+                /*
+                ADD SOME TYPE OF MESSAGE SHOWING THAT YOU NEED TO DISCARD CARD
+                */
+
+                foreach (GameObject ob in emain.playerOneCards)
+                {
+                    string listCardName = ob.name.ToString() + "(Clone)";
+
+                    if (listCardName == this.gameObject.name.ToString())
+                    {
+                        isPlayerOneCard = true;
+                    }
+                }
+
+                if (isPlayerOneCard == true)
+                {
+                    //removes from playerOneCards GameObject List
+                    for (int i = 0; i <= emain.playerOneCards.Count - 1; i++)
+                    {
+                        string listCardName = emain.playerOneCards[i].name.ToString() + "(Clone)";
+
+                        if (listCardName == this.gameObject.name.ToString())
+                        {
+                            emain.playerOneCards.RemoveAt(i);
+                        }
+                    }
+
+                    //removes card from screen.
+                    GameObject.Destroy(this.gameObject);
+
+                    /*
+                     REMOVE DISCARD MESSAGE HERE
+                    */
+
+                }
+            }
+
             //moves cards to position for euchre and only happens on double click.
             if (clickCounter != 1)
             {

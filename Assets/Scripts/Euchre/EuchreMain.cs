@@ -277,13 +277,19 @@ public class EuchreMain : MonoBehaviour {
 
     public void addCardsToHand()
     {
+        //this needs to be smarter make people make smart decisions
+        //WHEN YOU FIRST GET TO ADD CARDS TO HAND YOU SHOULD KNOW ORDER THAT PLAYERS ARE GOING TO PLAY IN.
+        //array.insert(card, player that played it)
+
         handCards.Add(opponentOneCards[0]);
         handCards.Add(playerTwoCards[0]);
         handCards.Add(opponentTwoCards[0]);
     }
 
-    public void removePlayedCards()
+    public void removePlayedCards(GameObject cardToDiscardFromEachPlayersHand)
     {
+        //DO SOME TYPE OF CHECKING ON EACH LIST TO FIND PASSED IN GAMEOBJECT AND REMOVE FROM THE LIST.
+        
         opponentOneCards.Remove(opponentOneCards[0]);
         playerTwoCards.Remove(playerTwoCards[0]);
         opponentTwoCards.Remove(opponentTwoCards[0]);
@@ -870,9 +876,28 @@ public class EuchreMain : MonoBehaviour {
             Animate ani = manager.GetComponent<Animate>();
             ani.moveCardIntoPosition();
         }
-        
-        //removes cards from players cards that they have list
-        removePlayedCards();
+
+        //remove all cards from players cards list once they have been "played" on screen
+        foreach (GameObject ob in handCards)
+        {
+            foreach(GameObject card in playerTwoCards)
+            {
+                if (ob.name.ToString() == card.name.ToString())
+                    removePlayedCards(card);
+            }
+
+            foreach (GameObject card in opponentOneCards)
+            {
+                if (ob.name.ToString() == card.name.ToString())
+                    removePlayedCards(card);
+            }
+
+            foreach (GameObject card in opponentTwoCards)
+            {
+                if (ob.name.ToString() == card.name.ToString())
+                    removePlayedCards(card);
+            }
+        }
 	}
 
 	private int getCardValue(string card)
