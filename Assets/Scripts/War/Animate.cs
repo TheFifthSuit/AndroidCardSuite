@@ -13,6 +13,7 @@ public class Animate : MonoBehaviour {
     private bool opponentTwo = false;
     private int clickCounter = 0;
     private bool isPlayerOneCard;
+    private int cardIndexInList;
 
     
     void OnMouseDown()
@@ -62,6 +63,7 @@ public class Animate : MonoBehaviour {
 
                     //removes card from screen.
                     GameObject.Destroy(this.gameObject);
+                    emain.trackLeader = 4;
 
                     /*
                      REMOVE DISCARD MESSAGE HERE
@@ -81,39 +83,60 @@ public class Animate : MonoBehaviour {
                 {
 					foreach (GameObject go in emain.playerOneCards)
 					{
-						if (go.name.ToString() == this.gameObject.name.ToString().Replace("(Clone)",""))
-							playerOne = true;
+                        if (go.name.ToString() + "(Clone)" == this.gameObject.name.ToString())
+                        {
+                            playerOne = true;
+                            emain.handCards.Add(emain.playerOneCards[emain.playerOneCards.IndexOf(go)]);
+                            emain.removeFromList(emain.playerOneCards.IndexOf(go), "playerOne");
+                            cardIndexInList = emain.handCards.Count - 1;
+                        }
                     }
                 }
                 if (playerOne == false && playerTwo == false && opponentOne == false && opponentTwo == false)
                 {
                     foreach (GameObject go in emain.playerTwoCards)
                     {
-						if (go.name.ToString() == this.gameObject.name.ToString().Replace("(Clone)",""))
+                        if (go.name.ToString() + "(Clone)" == this.gameObject.name.ToString())
+                        {
                             playerTwo = true;
+                            emain.handCards.Add(emain.playerOneCards[emain.playerOneCards.IndexOf(go)]);
+                            emain.removeFromList(emain.playerOneCards.IndexOf(go), "playerTwo");
+                            cardIndexInList = emain.handCards.Count - 1;
+                        }
                     }
                 }
                 if (playerOne == false && playerTwo == false && opponentOne == false && opponentTwo == false)
                 {
                     foreach (GameObject go in emain.opponentOneCards)
                     {
-						if (go.name.ToString() == this.gameObject.name.ToString().Replace("(Clone)",""))
+                        if (go.name.ToString() + "(Clone)" == this.gameObject.name.ToString())
+                        {
                             opponentOne = true;
+                            emain.handCards.Add(emain.playerOneCards[emain.playerOneCards.IndexOf(go)]);
+                            emain.removeFromList(emain.playerOneCards.IndexOf(go), "opponentOne");
+                            cardIndexInList = emain.handCards.Count - 1;
+                        }
                     }
                 }
                 if (playerOne == false && playerTwo == false && opponentOne == false && opponentTwo == false)
                 {
                     foreach (GameObject go in emain.opponentTwoCards)
                     {
-						if (go.name.ToString() == this.gameObject.name.ToString().Replace("(Clone)",""))
+                        if (go.name.ToString() + "(Clone)" == this.gameObject.name.ToString())
+                        {
                             opponentTwo = true;
+                            emain.handCards.Add(emain.playerOneCards[emain.playerOneCards.IndexOf(go)]);
+                            emain.removeFromList(emain.playerOneCards.IndexOf(go), "opponentTwo");
+                            cardIndexInList = emain.handCards.Count - 1;
+                        }
                     }
                 }
 
                 startAnimation = true;
                 playAnimation();
                 clickCounter = 0;
-                emain.playEveryoneElsesCards();
+                emain.playSpecificCardInHand(cardIndexInList);
+                emain.playerOnePlayed = true;
             }
         }
     }
@@ -127,7 +150,7 @@ public class Animate : MonoBehaviour {
         {
             foreach (GameObject go in emain.playerOneCards)
             {
-                if (go.name.ToString() == this.gameObject.name.ToString().Replace("(Clone)", ""))
+                if (go.name.ToString() + "(Clone)"  == this.gameObject.name.ToString())
                     playerOne = true;
             }
         }
@@ -135,7 +158,7 @@ public class Animate : MonoBehaviour {
         {
             foreach (GameObject go in emain.playerTwoCards)
             {
-                if (go.name.ToString() == this.gameObject.name.ToString().Replace("(Clone)", ""))
+                if (go.name.ToString() + "(Clone)" == this.gameObject.name.ToString())
                     playerTwo = true;
             }
         }
@@ -143,7 +166,7 @@ public class Animate : MonoBehaviour {
         {
             foreach (GameObject go in emain.opponentOneCards)
             {
-                if (go.name.ToString() == this.gameObject.name.ToString().Replace("(Clone)", ""))
+                if (go.name.ToString() + "(Clone)" == this.gameObject.name.ToString())
                     opponentOne = true;
             }
         }
@@ -151,7 +174,7 @@ public class Animate : MonoBehaviour {
         {
             foreach (GameObject go in emain.opponentTwoCards)
             {
-                if (go.name.ToString() == this.gameObject.name.ToString().Replace("(Clone)", ""))
+                if (go.name.ToString() + "(Clone)" == this.gameObject.name.ToString())
                     opponentTwo = true;
             }
         }
