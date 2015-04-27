@@ -1029,7 +1029,7 @@ public class EuchreMain : MonoBehaviour {
 
 	public void opponentTwoMakeTrump()
 	{
-		if (opponentOneNumOfTrump >= 3) {
+		if (opponentTwoNumOfTrump >= 3) {
 			updateFeed("Opponent 2 Made Trump as " + potentialTrump);
 			currentTrump = potentialTrump;
 			trumpText.text = "Trump is: " + potentialTrump;

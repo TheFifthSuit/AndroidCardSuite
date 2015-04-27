@@ -2,12 +2,15 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Euchre\EuchreMain.cs">
     <Files>
-      <File FileName="Assets\Scripts\Euchre\EuchreMain.cs" Line="900" Column="1" />
+      <File FileName="Assets\Scripts\Euchre\EuchreMain.cs" Line="85" Column="29" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
           <Value>obj.transform.localRotation.y</Value>
+          <Value>playerTwoNumOfTrump</Value>
+          <Value>opponentOneNumOfTrump</Value>
+          <Value>opponentTwoNumOfTrump</Value>
         </State>
       </Pad>
     </Pads>
@@ -39,7 +42,8 @@
       <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="910" />
       <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="912" />
       <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="1016" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="916" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="295" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="911" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
