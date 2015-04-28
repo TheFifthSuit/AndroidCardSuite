@@ -2,39 +2,52 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Euchre\EuchreMain.cs">
     <Files>
-      <File FileName="Assets\Scripts\Euchre\EuchreMain.cs" Line="897" Column="1" />
-      <File FileName="Assets\Scripts\War\Animate.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\War\DeckObjects.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Euchre\EuchreMain.cs" Line="85" Column="29" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
           <Value>obj.transform.localRotation.y</Value>
+          <Value>playerTwoNumOfTrump</Value>
+          <Value>opponentOneNumOfTrump</Value>
+          <Value>opponentTwoNumOfTrump</Value>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\PlayCard.cs" line="26" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\PlayCard.cs" line="27" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\PlayCard.cs" line="28" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\War\PlayCard.cs" line="13" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\War\PlayCard.cs" line="18" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\War\PlayCard.cs" line="23" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\War\PlayCard.cs" line="31" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\War\WarMain.cs" line="701" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\BlackJack\BlackjackMain.cs" line="246" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\BlackJack\BlackjackMain.cs" line="144" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\War\Animate.cs" line="21" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="314" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="114" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="116" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="891" />
-      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="93" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="670" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="118" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="1077" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="1009" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="995" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="1030" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="1052" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="868" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="1015" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="1011" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="1012" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="1013" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="1014" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="870" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="878" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="880" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="881" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="896" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="897" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="900" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="907" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="908" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="910" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="912" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="1016" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="295" />
+      <Breakpoint file="C:\Users\DevAdmin\Documents\Senior Project\Assets\Scripts\Euchre\EuchreMain.cs" line="911" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="Assets\Scripts\Euchre\EuchreMain.cs" line="84" offsetX="437" offsetY="1411" expression="handCards" liveUpdate="False" />
+    <Watch file="Assets\Scripts\Euchre\EuchreMain.cs" line="665" offsetX="1757" offsetY="11288" expression="handCards" liveUpdate="False" />
   </MonoDevelop.Ide.DebuggingService.PinnedWatches>
 </Properties>

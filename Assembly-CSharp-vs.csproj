@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{755D703C-D841-9565-A16D-313A23A56D86}</ProjectGuid>
+	<ProjectGuid>{842BD019-2086-241A-23F0-C6503DEDBFEF}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\BlackJack\BlackjackMain.cs" />
      <Compile Include="Assets\Scripts\BlackJack\Hit.cs" />
      <Compile Include="Assets\Scripts\BlackJack\Stand.cs" />
+     <Compile Include="Assets\Scripts\Euchre\Discard.cs" />
      <Compile Include="Assets\Scripts\Euchre\EuchreMain.cs" />
      <Compile Include="Assets\Scripts\Euchre\MakeTrump.cs" />
      <Compile Include="Assets\Scripts\Euchre\PassTrump.cs" />

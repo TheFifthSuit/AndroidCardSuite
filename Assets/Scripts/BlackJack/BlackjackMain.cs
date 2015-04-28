@@ -25,6 +25,8 @@ public class BlackjackMain : MonoBehaviour {
     int totalScoreOpponent = 0;
     int totalScorePlayer = 0;
 
+	int count =0;
+
 	// will be used to hide and show buttons and messages
 	public GameObject bustMessage;
     public GameObject winMessage;
@@ -163,9 +165,6 @@ public class BlackjackMain : MonoBehaviour {
 		//Check for winner before turn is over
 		if (playerOneTotal > 21)
 		{
-
-			print("You Bust");
-
             bust = Instantiate(bustMessage, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
             bust.transform.SetParent(GameObject.Find("Canvas").transform);
             flipAllCards(objectsOnScreen);
@@ -178,8 +177,6 @@ public class BlackjackMain : MonoBehaviour {
 
 		if (playerOneTotal == 21)
 		{
-			print("You Win");
-
             win = Instantiate(winMessage, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
             win.transform.SetParent(GameObject.Find("Canvas").transform);
             flipAllCards(objectsOnScreen);
@@ -202,7 +199,7 @@ public class BlackjackMain : MonoBehaviour {
                     win.transform.SetParent(GameObject.Find("Canvas").transform);
                     flipAllCards(objectsOnScreen);
                     win.animation.Play();
-                    print("You beat the AI");
+
                     totalScorePlayer += 1;
 					
 					hitButton.SetActive (false);
@@ -216,7 +213,7 @@ public class BlackjackMain : MonoBehaviour {
                     win.transform.SetParent(GameObject.Find("Canvas").transform);
                     flipAllCards(objectsOnScreen);
                     win.animation.Play();
-                    print("you beat the AI");
+
                     totalScorePlayer += 1;
 					
 					hitButton.SetActive (false);
@@ -225,8 +222,6 @@ public class BlackjackMain : MonoBehaviour {
 
 				if (playerOneTotal < opponentTotal)
 				{
-					print("the AI beat you");
-
                     lose = Instantiate(loseMessage, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
                     lose.transform.SetParent(GameObject.Find("Canvas").transform);
                     flipAllCards(objectsOnScreen);
@@ -239,8 +234,6 @@ public class BlackjackMain : MonoBehaviour {
 
 				if (playerOneTotal == opponentTotal)
 				{
-					print("You Have the same score");
-
                     push = Instantiate(pushMessage, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
                     push.transform.SetParent(GameObject.Find("Canvas").transform);
                     flipAllCards(objectsOnScreen);
@@ -278,7 +271,8 @@ public class BlackjackMain : MonoBehaviour {
 
 	public void Hit()
 	{
-		
+
+
 		for (int i = 0; i <= 0; i++) 
 		{
 			int drawnCard = Random.Range(0, 52);
@@ -294,8 +288,23 @@ public class BlackjackMain : MonoBehaviour {
 			}
 		}
 
-		
 		playerOneTotal = playerOneTotal + getCardValue(playerOneCards[playerOneIndex]);
+
+		if (playerOneTotal > 21 && count == 0) 
+		{
+			for(int y = 0; y < playerOneCards.Count; y++)
+			{
+				int CardTempValue = getCardValue(playerOneCards[y]);
+				if (CardTempValue == 11)
+				{
+					playerOneTotal = playerOneTotal - 10;
+					count++;
+				}
+			}
+		}
+
+		print (dealtCards.Count);
+		stand = false;
 		playerOneIndex++;
         updateScore();
 		checkForWinner();
@@ -315,12 +324,14 @@ public class BlackjackMain : MonoBehaviour {
     public void reset()
     {
         //reset all variables that only last for current hand
+		dealtCards.Clear ();
         playerOneCards.Clear();
         opponentCards.Clear();
         playerOneTotal = 0;
         opponentTotal = 0;
         playerOneIndex = 0;
         opponentIndex = 0;
+		count = 0;
         objectsOnScreen.Clear();
     }
 

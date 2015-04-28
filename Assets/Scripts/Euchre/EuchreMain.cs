@@ -15,7 +15,7 @@ public class EuchreMain : MonoBehaviour {
 	public string lastHandWinner = "";
 
 	int newTrumpHearts= 0;
-	int newTrumpDimonds= 0;
+	int newTrumpDiamonds= 0;
 	int newTrumpClubs= 0;
 	int newTrumpSpades= 0;
 	int firstPlay = 0;
@@ -41,6 +41,7 @@ public class EuchreMain : MonoBehaviour {
 	public GameObject spadesButton;
 	public GameObject redealButton;
 	public GameObject playCardToHand;
+    public GameObject winMessage;
     public Text feed;
     private string line1 = "";
     private string line2 = "";
@@ -61,6 +62,9 @@ public class EuchreMain : MonoBehaviour {
 	//Track the Dealer
 	int trackDealer = 0;
 
+	//Track the Leader
+	public int trackLeader = 1;
+
 	//empty string that will be later filled with the first card in the Kitty
 	string potentialTrump;
 	string currentTrump;
@@ -78,22 +82,38 @@ public class EuchreMain : MonoBehaviour {
     public List<GameObject> opponentTwoCards = new List<GameObject>();
     public List<GameObject> objectsOnScreen = new List<GameObject>();
     public List<GameObject> kittyCards = new List<GameObject>();
-    List<GameObject> handCards = new List<GameObject>();
+    public List<GameObject> handCards = new List<GameObject>();
 	
-	//list for "table" or the people setting to determine the hand
-	int tablePosition = 1;
-	
+    //bools to track who has played in the hand.
+    public bool playerOnePlayed;
+    public bool playerTwoPlayed;
+    public bool opponentOnePlayed;
+    public bool opponentTwoPlayed;
+    public bool trumpSelectionFinished;
+
+	//bool to track whos turn to select turmp
+	public bool playerOneTrumpTurn;
+	public bool playerTwoTrumpTurn;
+	public bool opponentOneTrumpTurn;
+	public bool opponentTwoTrumpTurn;
+
+	//bool to track SECOND round to make trump
+	public bool playerOneTrumpSecondTurn;
+	public bool playerTwoTrumpSecondTurn;
+	public bool opponentOneTrumpSecondTurn;
+	public bool opponentTwoTrumpSecondTurn;
 
 	// Use this for initialization
-	void Start () 
+	void Start() 
 	{
         fillCardDeckObjects();
         
         //only pops up when trump is made first round
-		//discardButton.SetActive(false);
+		discardButton.SetActive(false);
 
 		//second round get to choose trump with butons or redeal
 		trumpButton.SetActive (false);
+		passButton.SetActive (false);
 		heartsButton.SetActive(false);
 		dimondsButton.SetActive (false);
 		clubsButton.SetActive(false);
@@ -101,11 +121,7 @@ public class EuchreMain : MonoBehaviour {
 		redealButton.SetActive (false);
 
 		//starts the game
-		dealPlayerCards();
-		displayAllCards();
-		//displayAllWithHand ();
-		countTrumpInHand();
-        //playGame();
+        playGame();
 	}
 
     //fills deck of objects with method called in deckObjects class
@@ -213,29 +229,96 @@ public class EuchreMain : MonoBehaviour {
 
 	public void playGame()
 	{
+        trackDealer = 0;
 
-		updateFeed ("Playing");
-		if (firstPlay == 1)
-		{
-			//cardIsDiscarded= true;
-			cardIsPlayed = false;
-            //addCardsToHand();
+        dealPlayerCards();
+        displayAllCard();
+        countTrumpInHand();
+        makeTrumpFromKitty();
+        //addCardsToHand();
+        //clearBoardCardsToScreen();
+
+
+        /*while(playerOneCards.Count != 0)
+        {
+            addCardsToHand();
+			//clearBoardCardsWithHandToScreen();
 			firstPlay++;
-			//checkForWinnerOfHand();
-		}
+		}*/
 	}
 
+    void Update()
+    {
+        if (playerOnePlayed == true)
+        {
+            playOpponentOne();
+            playerOnePlayed = false;
+        }
+        if (playerTwoPlayed == true)
+        {
+            playOpponentTwo();
+            playerTwoPlayed = false;
+        }
+        if (opponentOnePlayed == true)
+        {
+            playPlayerTwo();
+            opponentOnePlayed = false;
+        }
+        if (opponentTwoPlayed == true)
+        {
+            playPlayerOne();
+            opponentTwoPlayed = false;
+        }
+        if (trumpSelectionFinished == true)
+        {
+			if(trackDealer==0)
+			{
+				if(cardIsDiscarded==true)
+				{
+					addCardsToHand();
+				}
+			}
+            
+            //checkForWinnerOfHand();
+            trumpSelectionFinished = false;
+        }
+		if (playerOneTrumpTurn == true || playerOneTrumpSecondTurn == true) 
+        {
+            playerOneMakeTrump();
+		}
+		if (opponentOneTrumpTurn == true || opponentOneTrumpSecondTurn == true )
+        {
+            opponentOneMakeTrump();
+        }
+		if (playerTwoTrumpTurn == true || playerTwoTrumpSecondTurn == true )
+        {
+            playerTwoMakeTrump();
+        }
+		if (opponentTwoTrumpTurn == true || opponentTwoTrumpSecondTurn == true)
+        {
+            opponentTwoMakeTrump();
+        }
+        if(handCards.Count == 4)
+        {
+            checkForWinnerOfHand();
+            handCards.Clear();
+            //clearBoardNoReplaceKitty();
+        }
+    }
 
 	public void trumpHeartsClicked()
 	{
-		heartsButton.SetActive(false);
+		heartsButton.SetActive (false);
 		dimondsButton.SetActive (false);
 		clubsButton.SetActive(false);
 		spadesButton.SetActive (false);
 		redealButton.SetActive (false);
+		clearBoardNoReplaceKitty();
 		currentTrump = "Hearts";
 		trumpText.text = "Trump is: " + currentTrump;
-		playGame ();
+		cardIsDiscarded = true;
+		trumpSelectionFinished = true;
+
 
 	}
 
@@ -246,9 +329,10 @@ public class EuchreMain : MonoBehaviour {
 		clubsButton.SetActive(false);
 		spadesButton.SetActive (false);
 		redealButton.SetActive (false);
+		clearBoardNoReplaceKitty();
 		currentTrump = "Clubs";
 		trumpText.text = "Trump is: " + currentTrump;
-		playGame ();
+		//playGame ();
 		
 	}
 	public void trumpSpadessClicked()
@@ -258,242 +342,235 @@ public class EuchreMain : MonoBehaviour {
 		clubsButton.SetActive(false);
 		spadesButton.SetActive (false);
 		redealButton.SetActive (false);
+		clearBoardNoReplaceKitty();
 		currentTrump = "Spades";
 		trumpText.text = "Trump is: " + currentTrump;
-		playGame ();
+		//playGame ();
 		
 	}
-	public void trumpDimondsClicked()
+	public void trumpDiamondsClicked()
 	{
 		heartsButton.SetActive(false);
 		dimondsButton.SetActive (false);
 		clubsButton.SetActive(false);
 		spadesButton.SetActive (false);
 		redealButton.SetActive (false);
+		clearBoardNoReplaceKitty();
 		currentTrump = "Dimonds";
 		trumpText.text = "Trump is: " + currentTrump;
-		playGame ();
+		//playGame ();
 	}
 
     public void addCardsToHand()
     {
-        handCards.Add(opponentOneCards[0]);
-        handCards.Add(playerTwoCards[0]);
-        handCards.Add(opponentTwoCards[0]);
+    	if (trackLeader == 1)
+    	{
+        	playOpponentOne();
+    	}
+    	if (trackLeader == 2)
+    	{
+        	playPlayerTwo();
+    	}
+    	if (trackLeader == 3)
+    	{
+        	playOpponentTwo();
+    	}
+    	if (trackLeader == 4)
+    	{
+        	playPlayerOne();
+    	}
     }
 
-    public void removePlayedCards()
-    {
-        opponentOneCards.Remove(opponentOneCards[0]);
-        playerTwoCards.Remove(playerTwoCards[0]);
-        opponentTwoCards.Remove(opponentTwoCards[0]);
-    }
-
-	public void makeTrumpAgain()
+	public void playOpponentOne()
 	{
-		GameObject manager = GameObject.Find("_Manager");
-		ChangeScene changescene = manager.GetComponent<ChangeScene>();
-		if (trumpMade == false) {
-			newTrumpHearts =0;
-			newTrumpDimonds=0;
-			newTrumpClubs=0;
-			newTrumpSpades=0;
-
-			for (int i = 0; i != 5; i++) {
-
-				if (opponentOneCards[i].name.Contains ("H") || opponentOneCards [i].name.Contains ("jackD")) {
-					newTrumpHearts++;
-				}
-				if (opponentOneCards [i].name.Contains ("D") || opponentOneCards [i].name.Contains ("jackH")) {
-					newTrumpDimonds++;
-				}
-				if (opponentOneCards [i].name.Contains ("C") || opponentOneCards [i].name.Contains ("jackS")) {
-					newTrumpClubs++;
-				}
-				if (opponentOneCards [i].name.Contains ("S") || opponentOneCards [i].name.Contains ("jackC")) {
-					newTrumpSpades++;
-				}
-
-			}
-			if (newTrumpHearts >= 3)
-			{
-				trumpMade = true;
-				currentTrump= "Hearts";
-				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Opponent 1 made trump");
-				playGame();
-			}
-			if (newTrumpDimonds >= 3)
-			{
-				trumpMade = true;
-				currentTrump= "Dimonds";
-				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Opponent 1 made trump");
-				playGame();
-			}
-			if (newTrumpClubs >= 3)
-			{
-				trumpMade = true;
-				currentTrump= "Clubs";
-				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Opponent 1 made trump");
-				playGame();
-			}
-			if (newTrumpSpades >= 3)
-			{
-				trumpMade = true;
-				currentTrump= "Spades";
-				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Opponent 1 made trump");
-				playGame();
-			}
-		}
-		if (trumpMade == false)
+		// Check all cards in hand for HIGHEST and LOWEST and HIGHEST NOT TRUMP
+		int maxCard = 0;
+		int indexMaxCard = 0;
+		
+		int minCard = 0;
+		int indexMinCard = 1000;
+		
+		
+		for (int i = 0; i != opponentOneCards.Count; i++) 
 		{
-			newTrumpHearts =0;
-			newTrumpDimonds=0;
-			newTrumpClubs=0;
-			newTrumpSpades=0;
-			updateFeed ("Opponent 1 PASSED!!");
-
-			for (int i = 0; i != 5; i++) {
-				if (playerTwoCards [i].name.Contains("H")|| playerTwoCards [i].name.Contains("jackD"))
-				{
-					newTrumpHearts++;
-				}
-				if (playerTwoCards [i].name.Contains("D")|| playerTwoCards [i].name.Contains("jackH"))
-				{
-					newTrumpDimonds++;
-				}
-				if (playerTwoCards [i].name.Contains("C")|| playerTwoCards [i].name.Contains("jackS"))
-				{
-					newTrumpClubs++;
-				}
-				if (playerTwoCards [i].name.Contains("S")|| playerTwoCards [i].name.Contains("jackC"))
-				{
-					newTrumpSpades++;
-				}
-
-			}
-			if (newTrumpHearts >= 3)
+			string getCard = opponentOneCards[i].name.ToString();
+			if (getCardValue (getCard) > maxCard) 
 			{
-				trumpMade = true;
-				currentTrump= "Hearts";
-				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Partner made trump");
-				playGame();
+				maxCard = getCardValue(getCard);
+				indexMaxCard = i;	
 			}
-			if (newTrumpDimonds >= 3)
-			{
-				trumpMade = true;
-				currentTrump= "Dimonds";
-				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Partner made trump");
-				playGame();
-			}
-			if (newTrumpClubs >= 3)
-			{
-				trumpMade = true;
-				currentTrump= "Clubs";
-				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Partner made trump");
-				playGame();
-			}
-			if (newTrumpSpades >= 3)
-			{
-				trumpMade = true;
-				currentTrump= "Spades";
-				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Partner made trump");
-				playGame();
-			}
-		}
-
-
-		if (trumpMade == false)
-		{
-			newTrumpHearts =0;
-			newTrumpDimonds=0;
-			newTrumpClubs=0;
-			newTrumpSpades=0;
-			updateFeed ("Your Partner PASSED!!");
 			
-			for (int i = 0; i != 5; i++) {
-				if (opponentTwoCards [i].name.Contains("H")|| opponentTwoCards [i].name.Contains("jackD"))
-				{
-					newTrumpHearts++;
-				}
-				if (opponentTwoCards [i].name.Contains("D")|| opponentTwoCards [i].name.Contains("jackH"))
-				{
-					newTrumpDimonds++;
-				}
-				if (opponentTwoCards [i].name.Contains("C")|| opponentTwoCards [i].name.Contains("jackS"))
-				{
-					newTrumpClubs++;
-				}
-				if (opponentTwoCards [i].name.Contains("S")|| opponentTwoCards [i].name.Contains("jackC"))
-				{
-					newTrumpSpades++;
-				}
-				
-			}
-			if (newTrumpHearts >= 3)
+			if (getCardValue (getCard) < minCard) 
 			{
-				trumpMade = true;
-				currentTrump= "Hearts";
-				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Opponent Two made trump");
-				playGame();
+				minCard = getCardValue(getCard);
+				indexMinCard = i;	
 			}
-			if (newTrumpDimonds >= 3)
-			{
-				trumpMade = true;
-				currentTrump= "Dimonds";
-				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Opponent Two made trump");
-				playGame();
-			}
-			if (newTrumpClubs >= 3)
-			{
-				trumpMade = true;
-				currentTrump= "Clubs";
-				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Opponent Two made trump");
-				playGame();
-			}
-			if (newTrumpSpades >= 3)
-			{
-				trumpMade = true;
-				currentTrump= "Spades";
-				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Opponent Two made trump");
-				playGame();
-			}
+			
 		}
-
-		if (trumpMade == false) {
-			newTrumpHearts = 0;
-			newTrumpDimonds = 0;
-			newTrumpClubs = 0;
-			newTrumpSpades = 0;
-			updateFeed ("Opponent 2 PASSED!!");
-			updateFeed ("Its up to you");
-			heartsButton.SetActive(true);
-			dimondsButton.SetActive (true);
-			clubsButton.SetActive(true);
-			spadesButton.SetActive (true);
-			redealButton.SetActive (true);
-		}
+		handCards.Add(opponentOneCards[indexMaxCard]);
+        playSpecificCardInHand(handCards.Count - 1);
+        removeFromList(indexMaxCard, "opponentOne");
+        opponentOnePlayed = true;
 	}
-	
+
+	public void playPlayerTwo()
+	{
+		// Check all cards in hand for HIGHEST and LOWEST and HIGHEST NOT TRUMP
+		int maxCard = 0;
+		int indexMaxCard = 0;
+		
+		int minCard = 0;
+		int indexMinCard = 1000;
+		
+		
+		for (int i = 0; i != playerTwoCards.Count; i++) 
+		{
+			string getCard = playerTwoCards[i].name.ToString();
+			if (getCardValue (getCard) > maxCard) 
+			{
+				maxCard = getCardValue (getCard);
+				indexMaxCard = i;	
+			}
+			
+			if (getCardValue (getCard) < minCard) 
+			{
+				minCard = getCardValue (getCard);
+				indexMinCard = i;	
+			}
+			
+		}
+		handCards.Add(playerTwoCards[indexMaxCard]);
+        playSpecificCardInHand(handCards.Count - 1);
+        removeFromList(indexMaxCard, "playerTwo");
+        playerTwoPlayed = true;
+	}
+
+	public void playOpponentTwo()
+	{		
+		// Check all cards in hand for HIGHEST and LOWEST and HIGHEST NOT TRUMP
+		int maxCard = 0;
+		int indexMaxCard = 0;
+		
+		int minCard = 0;
+		int indexMinCard = 1000;
+		
+		
+		for (int i = 0; i != opponentTwoCards.Count; i++) 
+		{
+			string getCard = opponentTwoCards[i].name.ToString();
+			if (getCardValue (getCard) > maxCard) 
+			{
+				maxCard = getCardValue (getCard);
+				indexMaxCard = i;	
+			}
+			
+			if (getCardValue (getCard) < minCard) 
+			{
+				minCard = getCardValue (getCard);
+				indexMinCard = i;
+			}
+			
+		}
+		handCards.Add(opponentTwoCards[indexMaxCard]);
+        playSpecificCardInHand(handCards.Count - 1);
+        removeFromList(indexMaxCard, "opponentTwo");
+        opponentTwoPlayed = true;
+	}
+
+	public void playPlayerOne()
+	{
+		//print ("Player One Turn");
+	}
+
+    private void removePlayedCards()
+    {
+        //remove played cards from the players logical hands list
+        foreach (GameObject ob in handCards)
+        {
+            for (int i = 0; i <= playerTwoCards.Count - 1; i++)
+            {
+                if (ob.name.ToString() == playerTwoCards[i].name.ToString())
+                    removeFromList(i, "playerTwo");
+            }
+            for (int i = 0; i <= opponentOneCards.Count - 1; i++)
+            {
+                if (ob.name.ToString() == opponentOneCards[i].name.ToString())
+                    removeFromList(i, "opponentOne");
+            }
+            for (int i = 0; i <= opponentTwoCards.Count - 1; i++)
+            {
+                if (ob.name.ToString() == opponentTwoCards[i].name.ToString())
+                    removeFromList(i, "opponentTwo");
+            }
+        }
+    }
+
+    public void removeFromList(int index, string playerIdentifyer)
+    {
+        if (playerIdentifyer == "playerTwo")
+        {
+            playerTwoCards.RemoveAt(index);
+        }
+        else if (playerIdentifyer == "opponentOne")
+        {
+            opponentOneCards.RemoveAt(index);
+        }
+        else if (playerIdentifyer == "opponentTwo")
+        {
+            opponentTwoCards.RemoveAt(index);
+        }
+    }
+
 	private void checkForWinnerOfHand()
 	{
 		GameObject manager = GameObject.Find("_Manager");
 		ChangeScene changescene = manager.GetComponent<ChangeScene>();
-		
-		//Check for winner before turn is over
-		clearBoardCardsWithHandToScreen ();
-		
+
+		int indexWinner = 0;
+
+        int highestScore = Mathf.Max(getCardValue(handCards[0].name.ToString()), getCardValue(handCards[1].name.ToString()), getCardValue(handCards[2].name.ToString()), getCardValue(handCards[3].name.ToString()));
+
+        for (int i = 0; i < handCards.Count - 1; i++)
+        {
+            if (getCardValue(handCards[i].name.ToString()) == highestScore)
+            {
+                indexWinner = i;
+            }
+        }
+        
+		if (indexWinner == 1) 
+		{
+			//print ("opponent 1 has WON");
+            GameObject ob = Instantiate(winMessage, new Vector3(-400, 400, 0), Quaternion.identity) as GameObject;
+            ob.transform.SetParent(GameObject.Find("Canvas").transform);
+            ob.animation.Play();
+            trackLeader = 1;
+		}
+		if (indexWinner == 2) 
+		{
+			//print ("YOUR PARTNER WON");
+            GameObject ob = Instantiate(winMessage, new Vector3(-400, 400, 0), Quaternion.identity) as GameObject;
+            ob.transform.SetParent(GameObject.Find("Canvas").transform);
+            ob.animation.Play();
+            trackLeader = 2;
+		}
+		if (indexWinner == 3) 
+		{
+			//print ("opponent 2 has WON");
+            GameObject ob = Instantiate(winMessage, new Vector3(-400, 400, 0), Quaternion.identity) as GameObject;
+            ob.transform.SetParent(GameObject.Find("Canvas").transform);
+            ob.animation.Play();
+            trackLeader = 3;
+		}
+		if (indexWinner == 0) 
+		{
+			//print ("YOU WON");
+            GameObject ob = Instantiate(winMessage, new Vector3(-400, 400, 0), Quaternion.identity) as GameObject;
+            ob.transform.SetParent(GameObject.Find("Canvas").transform);
+            ob.animation.Play();
+            trackLeader = 4;
+		}
+		//print (handCards[indexWinner]);
 	}
 
 	//Goes to the left of dealer and sees if ever one wants to make trump
@@ -583,7 +660,6 @@ public class EuchreMain : MonoBehaviour {
 				}
 			}
 		}
-		makeTrumpFromKitty ();
 	}
 
 	public void removeToKitty(string CardClicked)
@@ -597,16 +673,6 @@ public class EuchreMain : MonoBehaviour {
 		}
 	}
 
-	public void removeCardToKitty(string CardClicked)
-	{
-		discard = discard.Replace ("(Clone)", "");
-		//playerOneCards.Remove (discard.ToString();
-		clearBoardNoReplaceKitty ();
-		discardButton.SetActive(false);
-		playGame();
-	}
-
-
 	public void pickUpKitty()
 	{
 		if(trackDealer == 0)
@@ -618,7 +684,47 @@ public class EuchreMain : MonoBehaviour {
 			clearBoardNoReplaceKitty();
 
 		}
+        else if (trackDealer == 1)
+        {
+            opponentOneCards.Add(kittyCards[0]);
+            opponentOneCards = computerDiscardCardAfterTakingKitty(opponentOneCards);
+        }
+        else if (trackDealer == 2)
+        {
+            playerTwoCards.Add(kittyCards[0]);
+            playerTwoCards = computerDiscardCardAfterTakingKitty(playerTwoCards);
+        }
+        else if (trackDealer == 3)
+        {
+            opponentTwoCards.Add(kittyCards[0]);
+            opponentTwoCards = computerDiscardCardAfterTakingKitty(opponentTwoCards);
+        }
 	}
+
+    private List<GameObject> computerDiscardCardAfterTakingKitty(List<GameObject> cardList)
+    {
+        int worstCardIndex = 0;
+        
+        //we are assuming since they just took the kitty card they will have 6 cards.
+        int lowestScore = Mathf.Min(getCardValue(cardList[0].name.ToString()),
+                                     getCardValue(cardList[1].name.ToString()),
+                                     getCardValue(cardList[2].name.ToString()),
+                                     getCardValue(cardList[3].name.ToString()),
+                                     getCardValue(cardList[4].name.ToString()),
+                                     getCardValue(cardList[5].name.ToString()));
+
+
+        for (int i = 0; i <= cardList.Count - 1; i++)
+        {
+			if (getCardValue(cardList[i].name.ToString()) == lowestScore)
+            {
+                worstCardIndex = i;
+            }
+        }
+
+        cardList.RemoveAt(worstCardIndex);
+        return cardList;
+    }
 
 	public void clearBoardNoReplaceKitty()
 	{
@@ -655,7 +761,7 @@ public class EuchreMain : MonoBehaviour {
 			Destroy(clone);
 		}
 		
-		displayAllCards();
+		displayAllCard();
 	}
 
 	public void clearBoardCardsWithHandToScreen()
@@ -673,20 +779,18 @@ public class EuchreMain : MonoBehaviour {
 		{
 			Destroy(clone);
 		}
-		
-		playEveryoneElsesCards ();
 	}
 
 	public void trumpButtonClicked()
 	{
+		trumpButton.SetActive (false);
+		passButton.SetActive (false);
 		playerOneTrumpMade = true;
 		trumpMade = true;
 		currentTrump = potentialTrump;
 		trumpText.text = "Trump is: " + potentialTrump;
 		updateFeed ("YOU HAVE MADE TRUMP");
-		cardIsDiscarded = false;
 		pickUpKitty();
-
 	}
 
 	public void passButtonClicked()
@@ -696,74 +800,348 @@ public class EuchreMain : MonoBehaviour {
 		trumpButton.SetActive (false);
 		passButton.SetActive (false);
 		clearBoardNoReplaceKitty ();
-		makeTrumpAgain ();
+        opponentOneTrumpSecondTurn = true;
+		playerOneTrumpTurn = false;
 	}
 
 	public void playerOneMakeTrump()
 	{
-		trumpButton.SetActive (true);
-		if (playerOneTrumpMade == true) 
+		if(playerOneTrumpTurn == true)
 		{
-			updateFeed ("YOU HAVE MADE TRUMP");
+			trumpButton.SetActive (true);
+			passButton.SetActive (true);
+			if (playerOneTrumpMade == true) 
+			{
+				updateFeed ("YOU HAVE MADE TRUMP");
+				print("YOU HAVE MADE TRUMP");
+			}
+			if (passMade == true) 
+			{
+				updateFeed ("YOU HAVE PASSED");
+				print("YOU HAVE PASSED");
+				//If playerOne is dealer when he passes it will be the second time to be trump
+				if(trackDealer == 0)
+				{
+					opponentOneTrumpSecondTurn = true;
+					playerOneTrumpTurn = false;
+				}
+
+				// If playerOne is NOT dealer it may or may not be second round to make trump
+				if(trackDealer != 0)
+				{
+					// figure out how many times the button has been clicked of flag or some thing
+					//NEED LOGIC!!!!!!!!!!!
+				}
+			}
+		}
+		if (playerOneTrumpSecondTurn == true) 
+		{
+			trumpButton.SetActive (false);
+			passButton.SetActive (false);
+			heartsButton.SetActive(true);
+			dimondsButton.SetActive (true);
+			clubsButton.SetActive(true);
+			spadesButton.SetActive (true);
+			redealButton.SetActive (true);
 
 		}
-		if (passMade == true) 
-		{
-			updateFeed ("YOU HAVE PASSED");
-		}
+
 
 	}
 
 	public void opponentOneMakeTrump()
 	{
-		if (opponentOneNumOfTrump >= 3) {
-			updateFeed("Opponent 1 Made Trump as " + potentialTrump);
-			trumpMade = true;
-			currentTrump = potentialTrump;
-			trumpText.text = "Trump is: " + potentialTrump;
-			cardIsDiscarded = false;
-			pickUpKitty();
-		} 
-		else 
+		if (opponentOneTrumpTurn == true) 
 		{
-			updateFeed("Opponent 1 Passed!!");
+	
+
+			if(opponentOneNumOfTrump>=3)
+			{
+				updateFeed("Opponent 1 Made Trump as " + potentialTrump);
+				currentTrump = potentialTrump;
+				trumpText.text = "Trump is: " + potentialTrump;
+				pickUpKitty();
+				opponentOneTrumpTurn = false;
+				trumpSelectionFinished = true;
+			}
+			else
+			{
+				updateFeed("Opponent 1 passed!");
+				print("Opponent 1 passed!");
+				playerTwoTrumpTurn = true;
+				opponentOneTrumpTurn = false;
+
+			}
 		}
+        
+		if (opponentOneTrumpSecondTurn == true)
+        {
+			newTrumpHearts =0;
+			newTrumpDiamonds=0;
+			newTrumpClubs=0;
+			newTrumpSpades=0;
+
+			for (int i = 0; i != opponentOneCards.Count - 1; i++) {
+				
+				if (opponentOneCards[i].name.Contains ("H") || opponentOneCards [i].name.Contains ("jackD")) {
+					newTrumpHearts++;
+				}
+				if (opponentOneCards [i].name.Contains ("D") || opponentOneCards [i].name.Contains ("jackH")) {
+					newTrumpDiamonds++;
+				}
+				if (opponentOneCards [i].name.Contains ("C") || opponentOneCards [i].name.Contains ("jackS")) {
+					newTrumpClubs++;
+				}
+				if (opponentOneCards [i].name.Contains ("S") || opponentOneCards [i].name.Contains ("jackC")) {
+					newTrumpSpades++;
+				}	
+			}
+			if (newTrumpHearts >= 3)
+			{
+				currentTrump= "Hearts";
+				trumpText.text = "Trump is: " + currentTrump;
+				updateFeed ("Opponent 1 made trump");
+				print ("Opponent 1 made Hearts");
+				opponentOneTrumpSecondTurn = false;
+				cardIsDiscarded = true;
+				trumpSelectionFinished = true;;
+			}
+			if (newTrumpDiamonds >= 3)
+			{
+				currentTrump= "Dimonds";
+				trumpText.text = "Trump is: " + currentTrump;
+				updateFeed ("Opponent 1 made trump");
+				print ("Opponent 1 made Dimonds");
+				opponentOneTrumpSecondTurn = false;
+				cardIsDiscarded = true;
+				trumpSelectionFinished = true;
+			}
+			if (newTrumpClubs >= 3)
+			{
+				currentTrump= "Clubs";
+				trumpText.text = "Trump is: " + currentTrump;
+				updateFeed ("Opponent 1 made trump");
+				print ("Opponent 1 made Clubs");
+				opponentOneTrumpSecondTurn = false;
+				cardIsDiscarded = true;
+				trumpSelectionFinished = true;
+			}
+			if (newTrumpSpades >= 3)
+			{
+				currentTrump= "Spades";
+				trumpText.text = "Trump is: " + currentTrump;
+				updateFeed ("Opponent 1 made trump");
+				print ("Opponent 1 made Spades");
+				opponentOneTrumpSecondTurn = false;
+				cardIsDiscarded = true;
+				trumpSelectionFinished = true;
+			}
+			if (trumpSelectionFinished == false)
+			{
+				updateFeed("Opponent 1 passed AGAIN!");
+				print("Opponent 1 passed AGAIN!");
+				playerTwoTrumpSecondTurn = true;
+				opponentOneTrumpSecondTurn = false;
+			}
+        }
+
 
 	}
 
 	public void opponentTwoMakeTrump()
 	{
-		if (opponentOneNumOfTrump >= 3) {
-			updateFeed("Opponent 2 Made Trump as " + potentialTrump);
-			trumpMade = true;
-			currentTrump = potentialTrump;
-			trumpText.text = "Trump is: " + potentialTrump;
-			cardIsDiscarded = false;
-			pickUpKitty();
-
-		} 
-		else 
+		if (opponentTwoTrumpTurn == true) 
 		{
-			updateFeed("Opponent 2 Passed!!");
+			//print ("Opponent Two Num of Trump " + opponentTwoNumOfTrump);
+			
+			if(opponentTwoNumOfTrump>=3)
+			{
+				updateFeed("Opponent 2 Made Trump as " + potentialTrump);
+				currentTrump = potentialTrump;
+				trumpText.text = "Trump is: " + potentialTrump;
+				pickUpKitty();
+				opponentTwoTrumpTurn = false;
+				trumpSelectionFinished = true;
+			}
+			else
+			{
+				updateFeed("Opponent 2 passed!");
+				print("Opponent 2 passed!");
+				playerOneTrumpTurn = true;
+				opponentTwoTrumpTurn = false;	
+			}
 		}
 		
+		if (opponentTwoTrumpSecondTurn == true)
+		{
+			newTrumpHearts =0;
+			newTrumpDiamonds=0;
+			newTrumpClubs=0;
+			newTrumpSpades=0;
+
+            for (int i = 0; i != opponentTwoCards.Count - 1; i++)
+            {
+				
+				if (opponentTwoCards[i].name.Contains ("H") || opponentTwoCards [i].name.Contains ("jackD")) {
+					newTrumpHearts++;
+				}
+				if (opponentTwoCards [i].name.Contains ("D") || opponentTwoCards [i].name.Contains ("jackH")) {
+					newTrumpDiamonds++;
+				}
+				if (opponentTwoCards [i].name.Contains ("C") || opponentTwoCards [i].name.Contains ("jackS")) {
+					newTrumpClubs++;
+				}
+				if (opponentTwoCards [i].name.Contains ("S") || opponentTwoCards [i].name.Contains ("jackC")) {
+					newTrumpSpades++;
+				}	
+			}
+			if (newTrumpHearts >= 3)
+			{
+				currentTrump= "Hearts";
+				trumpText.text = "Trump is: " + currentTrump;
+				updateFeed ("Opponent 2 made trump");
+				print("Opponent 2 made Hearts");
+				opponentTwoTrumpSecondTurn = false;
+				cardIsDiscarded = true;
+				trumpSelectionFinished = true;
+			}
+			if (newTrumpDiamonds >= 3)
+			{
+				currentTrump= "Dimonds";
+				trumpText.text = "Trump is: " + currentTrump;
+				updateFeed ("Opponent 2 made trump");
+				print("Opponent 2 made Dimonds");
+				opponentTwoTrumpSecondTurn = false;
+				cardIsDiscarded = true;
+				trumpSelectionFinished = true;
+			}
+			if (newTrumpClubs >= 3)
+			{
+				currentTrump= "Clubs";
+				trumpText.text = "Trump is: " + currentTrump;
+				updateFeed ("Opponent 2 made trump");
+				print("Opponent 2 made Clubs");
+				cardIsDiscarded = true;
+				trumpSelectionFinished = true;
+			}
+			if (newTrumpSpades >= 3)
+			{
+				currentTrump= "Spades";
+				trumpText.text = "Trump is: " + currentTrump;
+				updateFeed ("Opponent 2 made trump");
+				print("Opponent 2 made Spades");
+				opponentTwoTrumpSecondTurn = false;
+				cardIsDiscarded = true;
+				trumpSelectionFinished = true;
+			}
+			if (trumpSelectionFinished == false)
+			{
+				updateFeed("Opponent 2 passed AGAIN!");
+				print("Opponent 2 passed AGAIN!");
+				playerOneTrumpSecondTurn = true;
+				opponentTwoTrumpSecondTurn = false;
+			}
+		}
+
 	}
 
 	public void playerTwoMakeTrump()
 	{
-		if (playerTwoNumOfTrump >= 3) {
-			updateFeed("Your Partner Made Trump as " + potentialTrump);
-			trumpMade = true;
-			currentTrump = potentialTrump;
-			trumpText.text = "Trump is: " + potentialTrump;
-			cardIsDiscarded = false;
-			pickUpKitty();
-		} 
-		else 
+		if (playerTwoTrumpTurn == true) 
 		{
-			updateFeed("Your Partner Passed!!");
+			//print ("Player Two Num of Trump " + playerTwoNumOfTrump);
+			
+			if(playerTwoNumOfTrump>=3)
+			{
+				updateFeed("Player 2 Made Trump as " + potentialTrump);
+				currentTrump = potentialTrump;
+				trumpText.text = "Trump is: " + potentialTrump;
+				pickUpKitty();
+				playerTwoTrumpTurn = false;
+				trumpSelectionFinished = true;
+			}
+			else
+			{
+				updateFeed("Player 2 passed!");
+				print("Player 2 passed!");
+				opponentTwoTrumpTurn = true;
+				playerTwoTrumpTurn = false;	
+			}
 		}
 		
+		if (playerTwoTrumpSecondTurn == true)
+		{
+			newTrumpHearts =0;
+			newTrumpDiamonds=0;
+			newTrumpClubs=0;
+			newTrumpSpades=0;
+			
+			for (int i = 0; i != playerTwoCards.Count - 1; i++) {
+				
+				if (playerTwoCards[i].name.Contains ("H") || playerTwoCards [i].name.Contains ("jackD")) {
+					newTrumpHearts++;
+				}
+				if (playerTwoCards [i].name.Contains ("D") || playerTwoCards [i].name.Contains ("jackH")) {
+					newTrumpDiamonds++;
+				}
+				if (playerTwoCards [i].name.Contains ("C") || playerTwoCards [i].name.Contains ("jackS")) {
+					newTrumpClubs++;
+				}
+				if (playerTwoCards [i].name.Contains ("S") || playerTwoCards [i].name.Contains ("jackC")) {
+					newTrumpSpades++;
+				}	
+			}
+			if (newTrumpHearts >= 3)
+			{
+				currentTrump= "Hearts";
+				trumpText.text = "Trump is: " + currentTrump;
+				updateFeed ("Your Partner made trump");
+				print("Your Partner made Hearts");
+				playerTwoTrumpSecondTurn = false;
+				cardIsDiscarded = true;
+				trumpSelectionFinished = true;
+			}
+			if (newTrumpDiamonds >= 3)
+			{
+				currentTrump= "Dimonds";
+				trumpText.text = "Trump is: " + currentTrump;
+				updateFeed ("Your Partner made trump");
+				print("Your Partner made Dimonds");
+				playerTwoTrumpSecondTurn = false;
+				cardIsDiscarded = true;
+				trumpSelectionFinished = true;
+			}
+			if (newTrumpClubs >= 3)
+			{
+				currentTrump= "Clubs";
+				trumpText.text = "Trump is: " + currentTrump;
+				updateFeed ("Your Partner made trump");
+				print("Your Partner made Clubs");
+				playerTwoTrumpSecondTurn = false;
+				cardIsDiscarded = true;
+				trumpSelectionFinished = true;
+			}
+			if (newTrumpSpades >= 3)
+			{
+				currentTrump= "Spades";
+				trumpText.text = "Trump is: " + currentTrump;
+				updateFeed ("Opponent 2 made trump");
+				print("Your Partner made Spades");
+				playerTwoTrumpSecondTurn = false;
+				cardIsDiscarded = true;
+				trumpSelectionFinished = true;
+			}
+			if (trumpSelectionFinished == false)
+			{
+				updateFeed("Your Partner passed AGAIN!");
+				print("Your Partner passed AGAIN!");
+
+				opponentTwoTrumpSecondTurn = true;
+				playerTwoTrumpSecondTurn = false;
+
+
+			}
+		}
 	}
 
 
@@ -797,42 +1175,24 @@ public class EuchreMain : MonoBehaviour {
 	{
 		if(trackDealer == 0)
 		{
-			opponentOneMakeTrump();
-			if(trumpMade == false)
-			{
-				playerTwoMakeTrump();
-			}
-			if(trumpMade == false)
-			{
-				opponentTwoMakeTrump();
-			}
-			if(trumpMade == false)
-			{
-				playerOneMakeTrump();
-			}
+			opponentOneTrumpTurn = true;
 		}
 		if(trackDealer == 1)
 		{
-			opponentOneMakeTrump();
-			playerTwoMakeTrump();
-			opponentTwoMakeTrump();
+			playerTwoTrumpTurn = true;
 		}
 		if(trackDealer == 2)
 		{
-			opponentOneMakeTrump();
-			playerTwoMakeTrump();
-			opponentTwoMakeTrump();
+			opponentTwoTrumpTurn = true;
 		}
 		if(trackDealer == 3)
 		{
-			opponentOneMakeTrump();
-			playerTwoMakeTrump();
-			opponentTwoMakeTrump();
+			playerOneTrumpTurn = true;
 		}
 	}
 
 
-	public void displayAllCards()
+	public void displayAllCard()
 	{
 		//team one (This is the BOTTOM and TOP of screen)
 		cardToScreenPlayerOne(-600, -600);
@@ -858,28 +1218,24 @@ public class EuchreMain : MonoBehaviour {
 		cardToScreenOpponentTwo(1000, 600);
 	}
 
-	public void playEveryoneElsesCards()
-	{
-        //need to move all cards into position here after player plays there card call this from animate.
-        foreach (GameObject ob in handCards)
-        {
-            string card = ob.name.ToString() + "(Clone)";
-            GameObject manager = GameObject.Find(card);
-            print(manager);
-            Animate ani = manager.GetComponent<Animate>();
-            ani.moveCardIntoPosition();
-        }
-        
-        //removes cards from players cards that they have list
-        removePlayedCards();
-	}
+    public void playSpecificCardInHand(int indexOfCard)
+    {
+        //print("playspecificcardinhand playing");
+        //print(handCards.Count + " is total number of cards in hand");
+        //print(indexOfCard.ToString() + " is index used");
+        string card = handCards[indexOfCard].name.ToString() + "(Clone)";
+        GameObject manager = GameObject.Find(card);
+        //print(manager);
+        Animate ani = manager.GetComponent<Animate>();
+        ani.moveCardIntoPosition();
+    }
 
 	private int getCardValue(string card)
 	{
 		int cardValue = 0;
 		char letter = currentTrump[0];
 		string firstLetter = letter.ToString ();
-
+		
 		if(card.Contains("nine"))
 		{
 			cardValue = 9;
@@ -943,7 +1299,7 @@ public class EuchreMain : MonoBehaviour {
 					cardValue= cardValue +15;
 				}
 			}
-
+			
 		}
 		if(card.Contains("queen"))
 		{
@@ -969,8 +1325,9 @@ public class EuchreMain : MonoBehaviour {
 				cardValue= cardValue +10;
 			}
 		}
-
+		
 		return cardValue;
+
 	}
 	
 
