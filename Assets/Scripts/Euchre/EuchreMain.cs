@@ -5,10 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class EuchreMain : MonoBehaviour {
-	
+
     //variables used in functions
-	string lastCardPlayedPlayerOne;
-	string lastCardPlayedOpponent;
 	public Text playerScoreText;
 	public Text opponentScoreText;
 	public Text trumpText;
@@ -18,7 +16,6 @@ public class EuchreMain : MonoBehaviour {
 	int newTrumpDiamonds= 0;
 	int newTrumpClubs= 0;
 	int newTrumpSpades= 0;
-	int firstPlay = 0;
 
 	public bool cardIsDiscarded = true;
 	public bool cardIsPlayed = true;
@@ -27,9 +24,12 @@ public class EuchreMain : MonoBehaviour {
 	public string discard;
 	public string playCard;
 
+	// Booleans to set the buttons Active or not
 	bool trumpMade = false;
-	bool playerOneTrumpMade = false;
 	bool passMade = false;
+
+	bool playerOneTrumpMade = false;
+
 	
 	// will be used to hide and show buttons
 	public GameObject trumpButton;
@@ -235,16 +235,7 @@ public class EuchreMain : MonoBehaviour {
         displayAllCard();
         countTrumpInHand();
         makeTrumpFromKitty();
-        //addCardsToHand();
-        //clearBoardCardsToScreen();
 
-
-        /*while(playerOneCards.Count != 0)
-        {
-            addCardsToHand();
-			//clearBoardCardsWithHandToScreen();
-			firstPlay++;
-		}*/
 	}
 
     void Update()
@@ -271,10 +262,19 @@ public class EuchreMain : MonoBehaviour {
         }
         if (trumpSelectionFinished == true)
         {
+
 			if(trackDealer==0)
 			{
 				if(cardIsDiscarded==true)
 				{
+					// FOR SOME REASON THEY DO NOT GET SET TO FALSE ON CLICK
+					trumpButton.SetActive (false);
+					passButton.SetActive (false);
+					heartsButton.SetActive(false);
+					dimondsButton.SetActive (false);
+					clubsButton.SetActive(false);
+					spadesButton.SetActive (false);
+					redealButton.SetActive (false);
 					addCardsToHand();
 				}
 			}
@@ -304,15 +304,26 @@ public class EuchreMain : MonoBehaviour {
             handCards.Clear();
             //clearBoardNoReplaceKitty();
         }
+		if (trumpMade == true)
+		{
+			trumpButton.SetActive(false);
+			passButton.SetActive(false);
+			heartsButton.SetActive (false);
+			dimondsButton.SetActive (false);
+			clubsButton.SetActive(false);
+			spadesButton.SetActive (false);
+			redealButton.SetActive (false);
+		}
+		if (passMade == true)
+		{
+			trumpButton.SetActive(false);
+			passButton.SetActive(false);
+		}
     }
 
 	public void trumpHeartsClicked()
 	{
-		heartsButton.SetActive (false);
-		dimondsButton.SetActive (false);
-		clubsButton.SetActive(false);
-		spadesButton.SetActive (false);
-		redealButton.SetActive (false);
+		trumpMade = true;
 		clearBoardNoReplaceKitty();
 		currentTrump = "Hearts";
 		trumpText.text = "Trump is: " + currentTrump;
@@ -324,11 +335,7 @@ public class EuchreMain : MonoBehaviour {
 
 	public void trumpClubsClicked()
 	{
-		heartsButton.SetActive(false);
-		dimondsButton.SetActive (false);
-		clubsButton.SetActive(false);
-		spadesButton.SetActive (false);
-		redealButton.SetActive (false);
+		trumpMade = true;
 		clearBoardNoReplaceKitty();
 		currentTrump = "Clubs";
 		trumpText.text = "Trump is: " + currentTrump;
@@ -337,11 +344,7 @@ public class EuchreMain : MonoBehaviour {
 	}
 	public void trumpSpadessClicked()
 	{
-		heartsButton.SetActive(false);
-		dimondsButton.SetActive (false);
-		clubsButton.SetActive(false);
-		spadesButton.SetActive (false);
-		redealButton.SetActive (false);
+		trumpMade = true;
 		clearBoardNoReplaceKitty();
 		currentTrump = "Spades";
 		trumpText.text = "Trump is: " + currentTrump;
@@ -350,11 +353,7 @@ public class EuchreMain : MonoBehaviour {
 	}
 	public void trumpDiamondsClicked()
 	{
-		heartsButton.SetActive(false);
-		dimondsButton.SetActive (false);
-		clubsButton.SetActive(false);
-		spadesButton.SetActive (false);
-		redealButton.SetActive (false);
+		trumpMade = true;
 		clearBoardNoReplaceKitty();
 		currentTrump = "Dimonds";
 		trumpText.text = "Trump is: " + currentTrump;
@@ -479,7 +478,18 @@ public class EuchreMain : MonoBehaviour {
 
 	public void playPlayerOne()
 	{
-		//print ("Player One Turn");
+		if(cardIsPlayed== false)
+		{
+			//add card to hand
+
+
+		}
+		else
+		{
+			//try to make an infinate loop so it will wait for input
+			cardIsPlayed = true;
+		}
+
 	}
 
     private void removePlayedCards()
@@ -524,7 +534,7 @@ public class EuchreMain : MonoBehaviour {
 	private void checkForWinnerOfHand()
 	{
 		GameObject manager = GameObject.Find("_Manager");
-		ChangeScene changescene = manager.GetComponent<ChangeScene>();
+//		ChangeScene changescene = manager.GetComponent<ChangeScene>();
 
 		int indexWinner = 0;
 
@@ -570,7 +580,7 @@ public class EuchreMain : MonoBehaviour {
             ob.animation.Play();
             trackLeader = 4;
 		}
-		//print (handCards[indexWinner]);
+
 	}
 
 	//Goes to the left of dealer and sees if ever one wants to make trump
@@ -662,16 +672,6 @@ public class EuchreMain : MonoBehaviour {
 		}
 	}
 
-	public void removeToKitty(string CardClicked)
-	{	
-		if (cardIsDiscarded == false)
-		{
-		    discardButton.SetActive(true);
-		    discard = CardClicked;
-			cardIsDiscarded =true;
-
-		}
-	}
 
 	public void pickUpKitty()
 	{
@@ -785,20 +785,16 @@ public class EuchreMain : MonoBehaviour {
 	{
 		trumpButton.SetActive (false);
 		passButton.SetActive (false);
-		playerOneTrumpMade = true;
 		trumpMade = true;
+		playerOneTrumpMade = true;
 		currentTrump = potentialTrump;
 		trumpText.text = "Trump is: " + potentialTrump;
-		updateFeed ("YOU HAVE MADE TRUMP");
 		pickUpKitty();
 	}
 
 	public void passButtonClicked()
 	{
 		passMade = true;
-		updateFeed ("YOU HAVE PASSED");
-		trumpButton.SetActive (false);
-		passButton.SetActive (false);
 		clearBoardNoReplaceKitty ();
         opponentOneTrumpSecondTurn = true;
 		playerOneTrumpTurn = false;
@@ -806,14 +802,23 @@ public class EuchreMain : MonoBehaviour {
 
 	public void playerOneMakeTrump()
 	{
+
 		if(playerOneTrumpTurn == true)
 		{
+
 			trumpButton.SetActive (true);
 			passButton.SetActive (true);
 			if (playerOneTrumpMade == true) 
 			{
+				playerOneTrumpMade = false;
+				trumpSelectionFinished = true;
+
+				updateFeed ("PLEASE DISCARD");
 				updateFeed ("YOU HAVE MADE TRUMP");
 				print("YOU HAVE MADE TRUMP");
+
+				clearBoardNoReplaceKitty();
+
 			}
 			if (passMade == true) 
 			{
@@ -840,7 +845,7 @@ public class EuchreMain : MonoBehaviour {
 			passButton.SetActive (false);
 			heartsButton.SetActive(true);
 			dimondsButton.SetActive (true);
-			clubsButton.SetActive(true);
+			clubsButton.SetActive (true);
 			spadesButton.SetActive (true);
 			redealButton.SetActive (true);
 
@@ -901,6 +906,7 @@ public class EuchreMain : MonoBehaviour {
 				currentTrump= "Hearts";
 				trumpText.text = "Trump is: " + currentTrump;
 				updateFeed ("Opponent 1 made trump");
+
 				print ("Opponent 1 made Hearts");
 				opponentOneTrumpSecondTurn = false;
 				cardIsDiscarded = true;
@@ -936,7 +942,7 @@ public class EuchreMain : MonoBehaviour {
 				cardIsDiscarded = true;
 				trumpSelectionFinished = true;
 			}
-			if (trumpSelectionFinished == false)
+			if (trumpSelectionFinished == false && cardIsDiscarded == false)
 			{
 				updateFeed("Opponent 1 passed AGAIN!");
 				print("Opponent 1 passed AGAIN!");
@@ -952,8 +958,6 @@ public class EuchreMain : MonoBehaviour {
 	{
 		if (opponentTwoTrumpTurn == true) 
 		{
-			//print ("Opponent Two Num of Trump " + opponentTwoNumOfTrump);
-			
 			if(opponentTwoNumOfTrump>=3)
 			{
 				updateFeed("Opponent 2 Made Trump as " + potentialTrump);
@@ -1034,9 +1038,9 @@ public class EuchreMain : MonoBehaviour {
 				cardIsDiscarded = true;
 				trumpSelectionFinished = true;
 			}
-			if (trumpSelectionFinished == false)
+			if (trumpSelectionFinished == false && cardIsDiscarded == false)
 			{
-				updateFeed("Opponent 2 passed AGAIN!");
+				updateFeed ("Opponent 2 passed AGAIN!");
 				print("Opponent 2 passed AGAIN!");
 				playerOneTrumpSecondTurn = true;
 				opponentTwoTrumpSecondTurn = false;
@@ -1049,11 +1053,9 @@ public class EuchreMain : MonoBehaviour {
 	{
 		if (playerTwoTrumpTurn == true) 
 		{
-			//print ("Player Two Num of Trump " + playerTwoNumOfTrump);
-			
 			if(playerTwoNumOfTrump>=3)
 			{
-				updateFeed("Player 2 Made Trump as " + potentialTrump);
+				updateFeed("Partner Made Trump as " + potentialTrump);
 				currentTrump = potentialTrump;
 				trumpText.text = "Trump is: " + potentialTrump;
 				pickUpKitty();
@@ -1062,7 +1064,7 @@ public class EuchreMain : MonoBehaviour {
 			}
 			else
 			{
-				updateFeed("Player 2 passed!");
+				updateFeed("Your partner passed!");
 				print("Player 2 passed!");
 				opponentTwoTrumpTurn = true;
 				playerTwoTrumpTurn = false;	
@@ -1095,7 +1097,7 @@ public class EuchreMain : MonoBehaviour {
 			{
 				currentTrump= "Hearts";
 				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Your Partner made trump");
+				updateFeed ("Partner made trump");
 				print("Your Partner made Hearts");
 				playerTwoTrumpSecondTurn = false;
 				cardIsDiscarded = true;
@@ -1105,7 +1107,7 @@ public class EuchreMain : MonoBehaviour {
 			{
 				currentTrump= "Dimonds";
 				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Your Partner made trump");
+				updateFeed ("Partner made trump");
 				print("Your Partner made Dimonds");
 				playerTwoTrumpSecondTurn = false;
 				cardIsDiscarded = true;
@@ -1115,7 +1117,7 @@ public class EuchreMain : MonoBehaviour {
 			{
 				currentTrump= "Clubs";
 				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Your Partner made trump");
+				updateFeed ("Partner made trump");
 				print("Your Partner made Clubs");
 				playerTwoTrumpSecondTurn = false;
 				cardIsDiscarded = true;
@@ -1125,7 +1127,7 @@ public class EuchreMain : MonoBehaviour {
 			{
 				currentTrump= "Spades";
 				trumpText.text = "Trump is: " + currentTrump;
-				updateFeed ("Opponent 2 made trump");
+				updateFeed ("Partner made trump");
 				print("Your Partner made Spades");
 				playerTwoTrumpSecondTurn = false;
 				cardIsDiscarded = true;
@@ -1138,8 +1140,6 @@ public class EuchreMain : MonoBehaviour {
 
 				opponentTwoTrumpSecondTurn = true;
 				playerTwoTrumpSecondTurn = false;
-
-
 			}
 		}
 	}
@@ -1327,7 +1327,6 @@ public class EuchreMain : MonoBehaviour {
 		}
 		
 		return cardValue;
-
 	}
 	
 
@@ -1348,42 +1347,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f, 
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f, 
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "nineH";
 				break;
 			case "tenH":
 				objectsOnScreen.Add(Instantiate(deckobjects.tenH, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "tenH";
 				break;
 			case "jackH":
 				objectsOnScreen.Add(Instantiate(deckobjects.jackH, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "jackH";
 				break;
 			case "queenH":
 				objectsOnScreen.Add(Instantiate(deckobjects.queenH, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "queenH";
 				break;
 			case "kingH":
 				objectsOnScreen.Add(Instantiate(deckobjects.kingH, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "kingH";
 				break;
 			case "aceH":
 				objectsOnScreen.Add(Instantiate(deckobjects.aceH, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "aceH";
 				break;
 				
 				//Diamonds
@@ -1392,42 +1385,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "nineD";
 				break;
 			case "tenD":
 				objectsOnScreen.Add(Instantiate(deckobjects.tenD, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "tenD";
 				break;
 			case "jackD":
 				objectsOnScreen.Add(Instantiate(deckobjects.jackD, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "jackD";
 				break;
 			case "queenD":
 				objectsOnScreen.Add(Instantiate(deckobjects.queenD, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "queenD";
 				break;
 			case "kingD":
 				objectsOnScreen.Add(Instantiate(deckobjects.kingD, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);				
-                lastCardPlayedPlayerOne = "kingD";
 				break;
 			case "aceD":
 				objectsOnScreen.Add(Instantiate(deckobjects.aceD, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "aceD";
 				break;
 				
 				//Clubs
@@ -1435,43 +1422,37 @@ public class EuchreMain : MonoBehaviour {
 				objectsOnScreen.Add(Instantiate(deckobjects.nineC, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
-                                                                                              objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "nineC";
+                                                                                              objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);;
 				break;
 			case "tenC":
 				objectsOnScreen.Add(Instantiate(deckobjects.tenC, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "tenC";
 				break;
 			case "jackC":
 				objectsOnScreen.Add(Instantiate(deckobjects.jackC, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "jackC";
 				break;
 			case "queenC":
 				objectsOnScreen.Add(Instantiate(deckobjects.queenC, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "queenC";
 				break;
 			case "kingC":
 				objectsOnScreen.Add(Instantiate(deckobjects.kingC, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "kingC";
 				break;
 			case "aceC":
 				objectsOnScreen.Add(Instantiate(deckobjects.aceC, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "aceC";
 				break;
 				
 				//Spades
@@ -1480,42 +1461,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "nineS";
 				break;
 			case "tenS":
 				objectsOnScreen.Add(Instantiate(deckobjects.tenS, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "tenS";
 				break;
 			case "jackS":
 				objectsOnScreen.Add(Instantiate(deckobjects.jackS, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "jackS";
 				break;
 			case "queenS":
 				objectsOnScreen.Add(Instantiate(deckobjects.queenS, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "queenS";
 				break;
 			case "kingS":
 				objectsOnScreen.Add(Instantiate(deckobjects.kingS, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "kingS";
 				break;
 			case "aceS":
 				objectsOnScreen.Add(Instantiate(deckobjects.aceS, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "aceS";
 				break;
 			}
 			#endregion
@@ -1540,42 +1515,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "nineH";
 				break;
 			case "tenH":
 				objectsOnScreen.Add(Instantiate(deckobjects.tenH, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "tenH";
 				break;
 			case "jackH":
 				objectsOnScreen.Add(Instantiate(deckobjects.jackH, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "jackH";
 				break;
 			case "queenH":
 				objectsOnScreen.Add(Instantiate(deckobjects.queenH, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "queenH";
 				break;
 			case "kingH":
 				objectsOnScreen.Add(Instantiate(deckobjects.kingH, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "kingH";
 				break;
 			case "aceH":
 				objectsOnScreen.Add(Instantiate(deckobjects.aceH, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "aceH";
 				break;
 				
 				//Diamonds
@@ -1584,42 +1553,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "nineD";
 				break;
 			case "tenD":
 				objectsOnScreen.Add(Instantiate(deckobjects.tenD, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "tenD";
 				break;
 			case "jackD":
 				objectsOnScreen.Add(Instantiate(deckobjects.jackD, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "jackD";
 				break;
 			case "queenD":
 				objectsOnScreen.Add(Instantiate(deckobjects.queenD, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "queenD";
 				break;
 			case "kingD":
 				objectsOnScreen.Add(Instantiate(deckobjects.kingD, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "kingD";
 				break;
 			case "aceD":
 				objectsOnScreen.Add(Instantiate(deckobjects.aceD, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "aceD";
 				break;
 				
 				//Clubs
@@ -1628,42 +1591,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "nineC";
 				break;
 			case "tenC":
 				objectsOnScreen.Add(Instantiate(deckobjects.tenC, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "tenC";
 				break;
 			case "jackC":
 				objectsOnScreen.Add(Instantiate(deckobjects.jackC, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "jackC";
 				break;
 			case "queenC":
 				objectsOnScreen.Add(Instantiate(deckobjects.queenC, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "queenC";
 				break;
 			case "kingC":
 				objectsOnScreen.Add(Instantiate(deckobjects.kingC, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "kingC";
 				break;
 			case "aceC":
 				objectsOnScreen.Add(Instantiate(deckobjects.aceC, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "aceC";
 				break;
 				
 				//Spades
@@ -1672,42 +1629,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "nineS";
 				break;
 			case "tenS":
 				objectsOnScreen.Add(Instantiate(deckobjects.tenS, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-				lastCardPlayedOpponent = "tenS";
 				break;
 			case "jackS":
 				objectsOnScreen.Add(Instantiate(deckobjects.jackS, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "jackS";
 				break;
 			case "queenS":
 				objectsOnScreen.Add(Instantiate(deckobjects.queenS, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "queenS";
 				break;
 			case "kingS":
 				objectsOnScreen.Add(Instantiate(deckobjects.kingS, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "kingS";
 				break;
 			case "aceS":
                 objectsOnScreen.Add(Instantiate(deckobjects.aceS, new Vector3(xPosition, yPosition, 0), Quaternion.Euler(0, 180, 90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "aceS";
 				break;
 			}
 			#endregion
@@ -1732,42 +1683,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "nineH";
 				break;
 			case "tenH":
 				objectsOnScreen.Add(Instantiate (deckobjects.nineH, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "tenH";
 				break;
 			case "jackH":
 				objectsOnScreen.Add(Instantiate (deckobjects.jackH, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "jackH";
 				break;
 			case "queenH":
 				objectsOnScreen.Add(Instantiate (deckobjects.queenH, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "queenH";
 				break;
 			case "kingH":
 				objectsOnScreen.Add(Instantiate (deckobjects.kingH, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "kingH";
 				break;
 			case "aceH":
 				objectsOnScreen.Add(Instantiate (deckobjects.aceH, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "aceH";
 				break;
 				
 				//Diamonds
@@ -1776,42 +1721,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "nineD";
 				break;
 			case "tenD":
 				objectsOnScreen.Add(Instantiate (deckobjects.tenD, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "tenD";
 				break;
 			case "jackD":
 				objectsOnScreen.Add(Instantiate (deckobjects.jackD, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "jackD";
 				break;
 			case "queenD":
 				objectsOnScreen.Add(Instantiate (deckobjects.queenD, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "queenD";
 				break;
 			case "kingD":
 				objectsOnScreen.Add(Instantiate (deckobjects.kingD, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "kingD";
 				break;
 			case "aceD":
 				objectsOnScreen.Add(Instantiate (deckobjects.aceD, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "aceD";
 				break;
 				
 				//Clubs
@@ -1820,42 +1759,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "nineC";
 				break;
 			case "tenC":
 				objectsOnScreen.Add(Instantiate (deckobjects.tenC, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "tenC";
 				break;
 			case "jackC":
 				objectsOnScreen.Add(Instantiate (deckobjects.jackC, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "jackC";
 				break;
 			case "queenC":
 				objectsOnScreen.Add(Instantiate (deckobjects.queenC, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "queenC";
 				break;
 			case "kingC":
 				objectsOnScreen.Add(Instantiate (deckobjects.kingC, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "kingC";
 				break;
 			case "aceC":
 				objectsOnScreen.Add(Instantiate (deckobjects.aceC, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "aceC";
 				break;
 				
 				//Spades
@@ -1864,42 +1797,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "nineS";
 				break;
 			case "tenS":
 				objectsOnScreen.Add(Instantiate (deckobjects.tenS, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "tenS";
 				break;
 			case "jackS":
 				objectsOnScreen.Add(Instantiate (deckobjects.jackS, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "jackS";
 				break;
 			case "queenS":
 				objectsOnScreen.Add(Instantiate (deckobjects.queenS, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "queenS";
 				break;
 			case "kingS":
 				objectsOnScreen.Add(Instantiate (deckobjects.kingS, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "kingS";
 				break;
 			case "aceS":
 				objectsOnScreen.Add(Instantiate (deckobjects.aceS, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, 0)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedPlayerOne = "aceS";
 				break;
 			}
 			#endregion
@@ -1924,42 +1851,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "nineH";
 				break;
 			case "tenH":
 				objectsOnScreen.Add(Instantiate (deckobjects.nineH, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "tenH";
 				break;
 			case "jackH":
 				objectsOnScreen.Add(Instantiate (deckobjects.jackH, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "jackH";
 				break;
 			case "queenH":
 				objectsOnScreen.Add(Instantiate (deckobjects.queenH, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "queenH";
 				break;
 			case "kingH":
 				objectsOnScreen.Add(Instantiate (deckobjects.kingH, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "kingH";
 				break;
 			case "aceH":
 				objectsOnScreen.Add(Instantiate (deckobjects.aceH, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "aceH";
 				break;
 				
 				//Diamonds
@@ -1968,42 +1889,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "nineD";
 				break;
 			case "tenD":
 				objectsOnScreen.Add(Instantiate (deckobjects.tenD, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "tenD";
 				break;
 			case "jackD":
 				objectsOnScreen.Add(Instantiate (deckobjects.jackD, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "jackD";
 				break;
 			case "queenD":
 				objectsOnScreen.Add(Instantiate (deckobjects.queenD, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "queenD";
 				break;
 			case "kingD":
 				objectsOnScreen.Add(Instantiate (deckobjects.kingD, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "kingD";
 				break;
 			case "aceD":
                 objectsOnScreen.Add(Instantiate(deckobjects.aceD, new Vector3(xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "aceD";
 				break;
 				
 				//Clubs
@@ -2012,42 +1927,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "nineC";
 				break;
 			case "tenC":
 				objectsOnScreen.Add(Instantiate (deckobjects.tenC, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "tenC";
 				break;
 			case "jackC":
 				objectsOnScreen.Add(Instantiate (deckobjects.jackC, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "jackC";
 				break;
 			case "queenC":
 				objectsOnScreen.Add(Instantiate (deckobjects.queenC, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "queenC";
 				break;
 			case "kingC":
 				objectsOnScreen.Add(Instantiate (deckobjects.kingC, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "kingC";
 				break;
 			case "aceC":
 				objectsOnScreen.Add(Instantiate (deckobjects.aceC, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "aceC";
 				break;
 				
 				//Spades
@@ -2056,42 +1965,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "nineS";
 				break;
 			case "tenS":
 				objectsOnScreen.Add(Instantiate (deckobjects.tenS, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "tenS";
 				break;
 			case "jackS":
 				objectsOnScreen.Add(Instantiate (deckobjects.jackS, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);				
-                lastCardPlayedOpponent = "jackS";
 				break;
 			case "queenS":
 				objectsOnScreen.Add(Instantiate (deckobjects.queenS, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "queenS";
 				break;
 			case "kingS":
 				objectsOnScreen.Add(Instantiate (deckobjects.kingS, new Vector3 (xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "kingS";
 				break;
 			case "aceS":
                 objectsOnScreen.Add(Instantiate(deckobjects.aceS, new Vector3(xPosition, yPosition, 0), Quaternion.Euler(0, 180, -90)) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "aceS";
 				break;
 			}
 			#endregion
@@ -2114,42 +2017,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "nineH";
 				break;
 			case "tenH":
 				objectsOnScreen.Add(Instantiate (deckobjects.nineH, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "tenH";
 				break;
 			case "jackH":
 				objectsOnScreen.Add(Instantiate (deckobjects.jackH, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "jackH";
 				break;
 			case "queenH":
 				objectsOnScreen.Add(Instantiate (deckobjects.queenH, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "queenH";
 				break;
 			case "kingH":
 				objectsOnScreen.Add(Instantiate (deckobjects.kingH, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "kingH";
 				break;
 			case "aceH":
 				objectsOnScreen.Add(Instantiate (deckobjects.aceH, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "aceH";
 				break;
 				
 				//Diamonds
@@ -2158,42 +2055,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "nineD";
 				break;
 			case "tenD":
 				objectsOnScreen.Add(Instantiate (deckobjects.tenD, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "tenD";
 				break;
 			case "jackD":
 				objectsOnScreen.Add(Instantiate (deckobjects.jackD, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "jackD";
 				break;
 			case "queenD":
 				objectsOnScreen.Add(Instantiate (deckobjects.queenD, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "queenD";
 				break;
 			case "kingD":
 				objectsOnScreen.Add(Instantiate (deckobjects.kingD, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "kingD";
 				break;
 			case "aceD":
 				objectsOnScreen.Add(Instantiate (deckobjects.aceD, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "aceD";
 				break;
 				
 				//Clubs
@@ -2202,42 +2093,36 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "nineC";
 				break;
 			case "tenC":
 				objectsOnScreen.Add(Instantiate (deckobjects.tenC, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "tenC";
 				break;
 			case "jackC":
 				objectsOnScreen.Add(Instantiate (deckobjects.jackC, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "jackC";
 				break;
 			case "queenC":
 				objectsOnScreen.Add(Instantiate (deckobjects.queenC, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);				
-                lastCardPlayedOpponent = "queenC";
 				break;
 			case "kingC":
 				objectsOnScreen.Add(Instantiate (deckobjects.kingC, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "kingC";
 				break;
 			case "aceC":
 				objectsOnScreen.Add(Instantiate (deckobjects.aceC, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "aceC";
 				break;
 				
 				//Spades
@@ -2246,46 +2131,38 @@ public class EuchreMain : MonoBehaviour {
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "nineS";
 				break;
 			case "tenS":
 				objectsOnScreen.Add(Instantiate (deckobjects.tenS, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "tenS";
 				break;
 			case "jackS":
 				objectsOnScreen.Add(Instantiate (deckobjects.jackS, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "jackS";
 				break;
 			case "queenS":
 				objectsOnScreen.Add(Instantiate (deckobjects.queenS, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "queenS";
 				break;
 			case "kingS":
 				objectsOnScreen.Add(Instantiate (deckobjects.kingS, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "kingS";
 				break;
 			case "aceS":
 				objectsOnScreen.Add(Instantiate (deckobjects.aceS, new Vector3 (xPosition, yPosition, 0), Quaternion.identity) as GameObject);
                 objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale = new Vector3(objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.x * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.y * 0.75f,
                                                                                               objectsOnScreen[objectsOnScreen.Count - 1].transform.localScale.z * 1f);
-                lastCardPlayedOpponent = "aceS";
 				break;
 			}
 			#endregion
-			
-
 	}
 }

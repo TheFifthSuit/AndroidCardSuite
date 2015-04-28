@@ -49,7 +49,6 @@
      <Compile Include="Assets\Scripts\BlackJack\BlackjackMain.cs" />
      <Compile Include="Assets\Scripts\BlackJack\Hit.cs" />
      <Compile Include="Assets\Scripts\BlackJack\Stand.cs" />
-     <Compile Include="Assets\Scripts\Euchre\Discard.cs" />
      <Compile Include="Assets\Scripts\Euchre\EuchreMain.cs" />
      <Compile Include="Assets\Scripts\Euchre\MakeTrump.cs" />
      <Compile Include="Assets\Scripts\Euchre\PassTrump.cs" />

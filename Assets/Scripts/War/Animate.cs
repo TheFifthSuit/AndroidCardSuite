@@ -85,7 +85,7 @@ public class Animate : MonoBehaviour {
 					{
                         if (go.name.ToString() + "(Clone)" == this.gameObject.name.ToString())
                         {
-                            playerOne = true;
+							playerOne = true;
                             emain.handCards.Add(emain.playerOneCards[emain.playerOneCards.IndexOf(go)]);
                             emain.removeFromList(emain.playerOneCards.IndexOf(go), "playerOne");
                             cardIndexInList = emain.handCards.Count - 1;
@@ -98,7 +98,9 @@ public class Animate : MonoBehaviour {
                     {
                         if (go.name.ToString() + "(Clone)" == this.gameObject.name.ToString())
                         {
-                            playerTwo = true;
+
+							playerTwo = true;
+
                             emain.handCards.Add(emain.playerOneCards[emain.playerOneCards.IndexOf(go)]);
                             emain.removeFromList(emain.playerOneCards.IndexOf(go), "playerTwo");
                             cardIndexInList = emain.handCards.Count - 1;
@@ -111,7 +113,9 @@ public class Animate : MonoBehaviour {
                     {
                         if (go.name.ToString() + "(Clone)" == this.gameObject.name.ToString())
                         {
-                            opponentOne = true;
+
+							opponentOne = true;
+
                             emain.handCards.Add(emain.playerOneCards[emain.playerOneCards.IndexOf(go)]);
                             emain.removeFromList(emain.playerOneCards.IndexOf(go), "opponentOne");
                             cardIndexInList = emain.handCards.Count - 1;
@@ -132,11 +136,15 @@ public class Animate : MonoBehaviour {
                     }
                 }
 
+
                 startAnimation = true;
                 playAnimation();
                 clickCounter = 0;
                 emain.playSpecificCardInHand(cardIndexInList);
+				if(emain.trackLeader !=1)
+				{
                 emain.playerOnePlayed = true;
+				}
             }
         }
     }
