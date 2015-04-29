@@ -144,7 +144,7 @@ public class Animate : MonoBehaviour {
                 playAnimation();
                 clickCounter = 0;
                 emain.playSpecificCardInHand(cardIndexInList);
-				if(emain.trackLeader !=1)
+				if(emain.trackLeader != 0)
 				{
                 	emain.playerOnePlayed = true;
 				}

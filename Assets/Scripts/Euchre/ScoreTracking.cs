@@ -17,8 +17,8 @@ public class ScoreTracking : MonoBehaviour {
     public int opponentTwoWinsBeforeRedeal;
 
     //Will be added to total team score
-    public int playerTeamScore;
-    public int opponentTeamScore;
+    public int playerTeamScore = 0;
+    public int opponentTeamScore = 0;
 
     public bool playFinished;
 
@@ -39,6 +39,10 @@ public class ScoreTracking : MonoBehaviour {
     {
         GameObject manager = GameObject.Find("_Manager");
         EuchreMain emain = manager.GetComponent<EuchreMain>();
+
+        playerScoreText.text = "Your Team Score: " + playerTeamScore.ToString();
+        opponentScoreText.text = "Opponent Team Score: " + opponentTeamScore.ToString();
+        
         //time to see who won
         if(playFinished == true)
         {
@@ -97,6 +101,5 @@ public class ScoreTracking : MonoBehaviour {
         opponentOneWinsBeforeRedeal = 0;
         opponentTwoWinsBeforeRedeal = 0;
         emain.whoMadeTrump = "";
-        playFinished = false;
     }
 }

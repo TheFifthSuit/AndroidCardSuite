@@ -8,9 +8,19 @@ public class NextPlay : MonoBehaviour {
     {
         GameObject manager = GameObject.Find("_Manager");
         EuchreMain emain = manager.GetComponent<EuchreMain>();
+        ScoreTracking score = manager.GetComponent<ScoreTracking>();
 
-
-        emain.clearBoardNoReplaceKitty();
+        if (score.playFinished == true)
+        {
+            score.playFinished = false;
+            print("NEXT DEALER TIME");
+            emain.clearBoardNoReplaceKitty();
+            emain.nextDeal();
+        }
+        else
+        {
+            emain.clearBoardNoReplaceKitty();
+        }
     }
 
 }

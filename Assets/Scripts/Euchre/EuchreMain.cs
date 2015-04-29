@@ -148,7 +148,12 @@ public class EuchreMain : MonoBehaviour {
         List<int> dealtCards = new List<int>();
         GameObject manager = GameObject.Find("_Manager");
         DeckObjects deckobjects = manager.GetComponent<DeckObjects>();
-        
+        playerOneCards.Clear();
+        playerTwoCards.Clear();
+        opponentOneCards.Clear();
+        opponentTwoCards.Clear();
+        kittyCards.Clear();
+
         for (int i = 0; i <= 4; i++) 
 		{
 			int drawnCard = Random.Range(0, 24);
@@ -229,7 +234,19 @@ public class EuchreMain : MonoBehaviour {
 
 	public void playGame()
 	{
-        trackDealer = 0;
+        if (trackDealer == 0)
+        {
+            trackDealer = 0;
+            trackLeader += trackDealer;
+        }
+        else if (trackDealer == 4)
+        {
+            trackLeader = 0;
+        }
+        else
+        {
+            trackLeader += trackDealer;
+        }
 
         dealPlayerCards();
         displayAllCard();
@@ -238,27 +255,76 @@ public class EuchreMain : MonoBehaviour {
 
 	}
 
+    public void nextDeal()
+    {
+        //dealer set for next deal as player to left of prev dealer
+        if (trackDealer < 4)
+        {
+            trackDealer += 1;
+        }
+        else if (trackDealer == 4)
+        {
+            trackDealer = 0;
+        }
+
+        //need to reset all used variables and lists
+        newTrumpHearts= 0;
+	    newTrumpDiamonds= 0;
+	    newTrumpClubs= 0;
+	    newTrumpSpades= 0;
+	    discard = "";
+	    playCard= "";
+	    trumpMade = false;
+	    passMade = false;
+        whoMadeTrump = "";
+
+	    playerOneTrumpMade = false;
+        playerOnePassMade = false;
+        playerOneNumOfTrump= 0;
+	    playerTwoNumOfTrump= 0;
+	    opponentOneNumOfTrump= 0;
+	    opponentTwoNumOfTrump= 0;
+
+        playerOnePlayed = false;
+        playerTwoPlayed = false;
+        opponentOnePlayed = false;
+        opponentTwoPlayed = false;
+        trumpSelectionFinished = false;
+
+        playerOneTrumpTurn = false;
+        playerTwoTrumpTurn = false;
+        opponentOneTrumpTurn = false;
+        opponentTwoTrumpTurn = false;
+
+        playerOneTrumpSecondTurn = false;
+        playerTwoTrumpSecondTurn = false;
+        opponentOneTrumpSecondTurn = false;
+        opponentTwoTrumpSecondTurn = false;
+
+        playGame();
+    }
+
     void Update()
     {
-        if (playerOnePlayed == true)
+        if (playerOnePlayed == true && opponentOnePlayed == false)
         {
             playOpponentOne();
-            playerOnePlayed = false;
+            //playerOnePlayed = false;
         }
-        if (playerTwoPlayed == true)
+        if (playerTwoPlayed == true && opponentTwoPlayed == false)
         {
             playOpponentTwo();
-            playerTwoPlayed = false;
+            //playerTwoPlayed = false;
         }
-        if (opponentOnePlayed == true)
+        if (opponentOnePlayed == true && playerTwoPlayed == false)
         {
             playPlayerTwo();
-            opponentOnePlayed = false;
+            //opponentOnePlayed = false;
         }
-        if (opponentTwoPlayed == true)
+        if (opponentTwoPlayed == true && playerOnePlayed == false)
         {
             playPlayerOne();
-            opponentTwoPlayed = false;
+            //opponentTwoPlayed = false;
         }
         if (trumpSelectionFinished == true)
         {
@@ -302,6 +368,10 @@ public class EuchreMain : MonoBehaviour {
         {
             checkForWinnerOfHand();
             handCards.Clear();
+            opponentTwoPlayed = false;
+            opponentOnePlayed = false;
+            playerTwoPlayed = false;
+            playerOnePlayed = false;
             //clearBoardNoReplaceKitty();
         }
 		if (trumpMade == true)
@@ -361,19 +431,19 @@ public class EuchreMain : MonoBehaviour {
 
     public void addCardsToHand()
     {
-    	if (trackLeader == 1)
+    	if (trackLeader == 0)
     	{
         	playOpponentOne();
     	}
-    	if (trackLeader == 2)
+    	if (trackLeader == 1)
     	{
         	playPlayerTwo();
     	}
-    	if (trackLeader == 3)
+    	if (trackLeader == 2)
     	{
         	playOpponentTwo();
     	}
-    	if (trackLeader == 4)
+    	if (trackLeader == 3)
     	{
         	playPlayerOne();
     	}
@@ -387,28 +457,30 @@ public class EuchreMain : MonoBehaviour {
 		
 		int minCard = 0;
 		int indexMinCard = 1000;
-		
-		
-		for (int i = 0; i != opponentOneCards.Count; i++) 
-		{
-			string getCard = opponentOneCards[i].name.ToString();
-			if (getCardValue (getCard) > maxCard) 
-			{
-				maxCard = getCardValue(getCard);
-				indexMaxCard = i;	
-			}
-			
-			if (getCardValue (getCard) < minCard) 
-			{
-				minCard = getCardValue(getCard);
-				indexMinCard = i;	
-			}
-			
-		}
-		handCards.Add(opponentOneCards[indexMaxCard]);
-        playSpecificCardInHand(handCards.Count - 1);
-        removeFromList(indexMaxCard, "opponentOne");
-        opponentOnePlayed = true;
+
+        if (opponentOnePlayed == false)
+        {
+            for (int i = 0; i != opponentOneCards.Count; i++)
+            {
+                string getCard = opponentOneCards[i].name.ToString();
+                if (getCardValue(getCard) > maxCard)
+                {
+                    maxCard = getCardValue(getCard);
+                    indexMaxCard = i;
+                }
+
+                if (getCardValue(getCard) < minCard)
+                {
+                    minCard = getCardValue(getCard);
+                    indexMinCard = i;
+                }
+
+            }
+            handCards.Add(opponentOneCards[indexMaxCard]);
+            playSpecificCardInHand(handCards.Count - 1);
+            removeFromList(indexMaxCard, "opponentOne");
+            opponentOnePlayed = true;
+        }
 	}
 
 	public void playPlayerTwo()
@@ -416,21 +488,24 @@ public class EuchreMain : MonoBehaviour {
 		// Check all cards in hand for HIGHEST and LOWEST and HIGHEST NOT TRUMP
 		int maxCard = 0;
 		int indexMaxCard = 0;
+        
+        if (playerTwoPlayed == false)
+        {
+            for (int i = 0; i != playerTwoCards.Count; i++)
+            {
+                string getCard = playerTwoCards[i].name.ToString();
+                if (getCardValue(getCard) > maxCard)
+                {
+                    maxCard = getCardValue(getCard);
+                    indexMaxCard = i;
+                }
+            }
 
-		for (int i = 0; i != playerTwoCards.Count; i++) 
-		{
-			string getCard = playerTwoCards[i].name.ToString();
-			if (getCardValue (getCard) > maxCard) 
-			{
-				maxCard = getCardValue (getCard);
-				indexMaxCard = i;	
-			}
-		}
-
-		handCards.Add(playerTwoCards[indexMaxCard]);
-        playSpecificCardInHand(handCards.Count - 1);
-        removeFromList(indexMaxCard, "playerTwo");
-        playerTwoPlayed = true;
+            handCards.Add(playerTwoCards[indexMaxCard]);
+            playSpecificCardInHand(handCards.Count - 1);
+            removeFromList(indexMaxCard, "playerTwo");
+            playerTwoPlayed = true;
+        }
 	}
 
 	public void playOpponentTwo()
@@ -439,20 +514,23 @@ public class EuchreMain : MonoBehaviour {
 		int maxCard = 0;
 		int indexMaxCard = 0;
 
-		for (int i = 0; i != opponentTwoCards.Count; i++) 
-		{
-			string getCard = opponentTwoCards[i].name.ToString();
-			if (getCardValue (getCard) >= maxCard) 
-			{
-				maxCard = getCardValue (getCard);
-				indexMaxCard = i;	
-			}
-		}
+        if (opponentTwoPlayed == false)
+        {
+            for (int i = 0; i != opponentTwoCards.Count; i++)
+            {
+                string getCard = opponentTwoCards[i].name.ToString();
+                if (getCardValue(getCard) >= maxCard)
+                {
+                    maxCard = getCardValue(getCard);
+                    indexMaxCard = i;
+                }
+            }
 
-		handCards.Add(opponentTwoCards[indexMaxCard]);
-        playSpecificCardInHand(handCards.Count - 1);
-        removeFromList(indexMaxCard, "opponentTwo");
-        opponentTwoPlayed = true;
+            handCards.Add(opponentTwoCards[indexMaxCard]);
+            playSpecificCardInHand(handCards.Count - 1);
+            removeFromList(indexMaxCard, "opponentTwo");
+            opponentTwoPlayed = true;
+        }
 	}
 
 	public void playPlayerOne()
@@ -658,7 +736,7 @@ public class EuchreMain : MonoBehaviour {
 
 	public void pickUpKitty()
 	{
-		if(trackDealer == 0)
+		if(trackLeader == 0)
 		{
 			trumpButton.SetActive (false);
 			passButton.SetActive (false);
@@ -667,20 +745,23 @@ public class EuchreMain : MonoBehaviour {
 			clearBoardNoReplaceKitty();
 
 		}
-        else if (trackDealer == 1)
+        else if (trackLeader == 1)
         {
             opponentOneCards.Add(kittyCards[0]);
             opponentOneCards = computerDiscardCardAfterTakingKitty(opponentOneCards);
+            clearBoardNoReplaceKitty();
         }
-        else if (trackDealer == 2)
+        else if (trackLeader == 2)
         {
             playerTwoCards.Add(kittyCards[0]);
             playerTwoCards = computerDiscardCardAfterTakingKitty(playerTwoCards);
+            clearBoardNoReplaceKitty();
         }
-        else if (trackDealer == 3)
+        else if (trackLeader == 3)
         {
             opponentTwoCards.Add(kittyCards[0]);
             opponentTwoCards = computerDiscardCardAfterTakingKitty(opponentTwoCards);
+            clearBoardNoReplaceKitty();
         }
 	}
 
@@ -794,9 +875,8 @@ public class EuchreMain : MonoBehaviour {
 				playerOneTrumpMade = false;
 				trumpSelectionFinished = true;
                 whoMadeTrump = "playerOne";
-
-				updateFeed ("PLEASE DISCARD");
 				updateFeed ("YOU HAVE MADE TRUMP");
+                updateFeed("PLEASE DISCARD");
 				print("YOU HAVE MADE TRUMP");
 
 				clearBoardNoReplaceKitty();
@@ -1155,20 +1235,23 @@ public class EuchreMain : MonoBehaviour {
         }
         else if(line1 != "" && line2 == "" && line3 == "")
         {
-            line2 = input;
+            line2 = line1;
+            line1 = input;
         }
         else if (line1 != "" && line2 != "" && line3 == "")
         {
-            line3 = input;
+            line3 = line2;
+            line2 = line1;
+            line1 = input;
         }
         else if (line1 != "" && line2 != "" && line3 != "")
         {
-            line2 = line1;
             line3 = line2;
+            line2 = line1;
             line1 = input;
         }
 
-        feed.text = line1 + "\n" + line2 + "\n" + line3 + "\n";
+        feed.text = line3 + "\n" + line2 + "\n" + line1 + "\n";
 
     }
 
@@ -1221,9 +1304,9 @@ public class EuchreMain : MonoBehaviour {
 
     public void playSpecificCardInHand(int indexOfCard)
     {
-        //print("playspecificcardinhand playing");
-        //print(handCards.Count + " is total number of cards in hand");
-        //print(indexOfCard.ToString() + " is index used");
+        print("playspecificcardinhand playing");
+        print(handCards.Count + " is total number of cards in hand");
+        print(indexOfCard.ToString() + " is index used");
         string card = handCards[indexOfCard].name.ToString() + "(Clone)";
         GameObject manager = GameObject.Find(card);
         //print(manager);
