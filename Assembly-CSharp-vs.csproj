@@ -39,20 +39,21 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>C:/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\BlackJack\BlackjackMain.cs" />
      <Compile Include="Assets\Scripts\BlackJack\Hit.cs" />
      <Compile Include="Assets\Scripts\BlackJack\Stand.cs" />
-     <Compile Include="Assets\Scripts\Euchre\Discard.cs" />
      <Compile Include="Assets\Scripts\Euchre\EuchreMain.cs" />
      <Compile Include="Assets\Scripts\Euchre\MakeTrump.cs" />
+     <Compile Include="Assets\Scripts\Euchre\NextPlay.cs" />
      <Compile Include="Assets\Scripts\Euchre\PassTrump.cs" />
+     <Compile Include="Assets\Scripts\Euchre\ScoreTracking.cs" />
      <Compile Include="Assets\Scripts\War\Animate.cs" />
      <Compile Include="Assets\Scripts\War\ChangeScene.cs" />
      <Compile Include="Assets\Scripts\War\ClearBoard.cs" />
@@ -62,7 +63,7 @@
      <Compile Include="Assets\Scripts\War\Quit.cs" />
      <Compile Include="Assets\Scripts\War\WarMain.cs" />
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
