@@ -28,6 +28,7 @@ public class EuchreMain : MonoBehaviour {
     public string whoMadeTrump;
 
 	bool playerOneTrumpMade = false;
+    bool playerOnePassMade = false;
 
 	
 	// will be used to hide and show buttons
@@ -48,6 +49,7 @@ public class EuchreMain : MonoBehaviour {
     private string line2 = "";
     private string line3 = "";
     public GameObject selectedCard;
+    public GameObject winMessage = null;
     
 
 
@@ -530,32 +532,37 @@ public class EuchreMain : MonoBehaviour {
         
 		if (indexWinner == 1) 
 		{
-            GameObject ob = Instantiate(opponentOneWinMessage, new Vector3(-400, 400, 0), Quaternion.identity) as GameObject;
-            ob.transform.SetParent(GameObject.Find("Canvas").transform);
-            ob.animation.Play();
+            winMessage = Instantiate(opponentOneWinMessage, new Vector3(-400, 400, 0), Quaternion.identity) as GameObject;
+            winMessage.transform.SetParent(GameObject.Find("Canvas").transform);
+            winMessage.animation.Play();
             score.opponentOneWinsBeforeRedeal += 1;
 		}
 		if (indexWinner == 2) 
 		{
-            GameObject ob = Instantiate(playerTwoWinMessage, new Vector3(-400, 400, 0), Quaternion.identity) as GameObject;
-            ob.transform.SetParent(GameObject.Find("Canvas").transform);
-            ob.animation.Play();
+            winMessage = Instantiate(playerTwoWinMessage, new Vector3(-400, 400, 0), Quaternion.identity) as GameObject;
+            winMessage.transform.SetParent(GameObject.Find("Canvas").transform);
+            winMessage.animation.Play();
             score.playerTwoWinsBeforeRedeal += 1;
 		}
 		if (indexWinner == 3) 
 		{
-            GameObject ob = Instantiate(opponentTwoWinMessage, new Vector3(-400, 400, 0), Quaternion.identity) as GameObject;
-            ob.transform.SetParent(GameObject.Find("Canvas").transform);
-            ob.animation.Play();
+            winMessage = Instantiate(opponentTwoWinMessage, new Vector3(-400, 400, 0), Quaternion.identity) as GameObject;
+            winMessage.transform.SetParent(GameObject.Find("Canvas").transform);
+            winMessage.animation.Play();
             score.playerTwoWinsBeforeRedeal += 1;
 		}
 		if (indexWinner == 0) 
 		{
-            GameObject ob = Instantiate(playerOneWinMessage, new Vector3(-400, 400, 0), Quaternion.identity) as GameObject;
-            ob.transform.SetParent(GameObject.Find("Canvas").transform);
-            ob.animation.Play();
+            winMessage = Instantiate(playerOneWinMessage, new Vector3(-400, 400, 0), Quaternion.identity) as GameObject;
+            winMessage.transform.SetParent(GameObject.Find("Canvas").transform);
+            winMessage.animation.Play();
             score.playerOneWinsBeforeRedeal += 1;
 		}
+
+        if (playerOneCards.Count == 0)
+        {
+            score.playFinished = true;
+        }
 
 	}
 
@@ -799,6 +806,7 @@ public class EuchreMain : MonoBehaviour {
 			{
 				updateFeed ("YOU HAVE PASSED");
 				print("YOU HAVE PASSED");
+                playerOnePassMade = true;
 				//If playerOne is dealer when he passes it will be the second time to be trump
 				if(trackDealer == 0)
 				{
@@ -807,10 +815,13 @@ public class EuchreMain : MonoBehaviour {
 				}
 
 				// If playerOne is NOT dealer it may or may not be second round to make trump
-				if(trackDealer != 0)
+				if(trackDealer != 0 && playerOnePassMade == true)
 				{
-					// figure out how many times the button has been clicked of flag or some thing
-					//NEED LOGIC!!!!!!!!!!!
+                    passButton.SetActive(true);
+                    heartsButton.SetActive(true);
+                    dimondsButton.SetActive(true);
+                    clubsButton.SetActive(true);
+                    spadesButton.SetActive(true);
 				}
 			}
 		}

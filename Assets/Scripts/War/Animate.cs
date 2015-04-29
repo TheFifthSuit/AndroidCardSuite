@@ -30,7 +30,10 @@ public class Animate : MonoBehaviour {
 
         if (Application.loadedLevelName == "Euchre")
         {
-            
+            if (emain.winMessage != null || emain.passButton.activeSelf == true || emain.trumpButton.activeSelf == true)
+            {
+                return;
+            }
             //check to see if we have 6 cards or not if so need to discard
             if (emain.playerOneCards.Count == 6)
             {

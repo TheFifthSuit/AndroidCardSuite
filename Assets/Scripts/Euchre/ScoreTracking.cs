@@ -19,7 +19,9 @@ public class ScoreTracking : MonoBehaviour {
     //Will be added to total team score
     public int playerTeamScore;
     public int opponentTeamScore;
-    
+
+    public bool playFinished;
+
     // Use this for initialization
 	void Start () 
     {
@@ -29,6 +31,7 @@ public class ScoreTracking : MonoBehaviour {
         opponentTwoWinsBeforeRedeal = 0;
         playerTeamScore = 0;
         opponentTeamScore = 0;
+        playFinished = false;
 	}
 	
 	// Update is called once per frame
@@ -37,46 +40,49 @@ public class ScoreTracking : MonoBehaviour {
         GameObject manager = GameObject.Find("_Manager");
         EuchreMain emain = manager.GetComponent<EuchreMain>();
         //time to see who won
-        if (emain.playerOneCards.Count == 0 && (playerOneWinsBeforeRedeal + playerTwoWinsBeforeRedeal + opponentOneWinsBeforeRedeal + opponentTwoWinsBeforeRedeal) != 0)
+        if(playFinished == true)
         {
-            //check for Euchred first
-            if (emain.whoMadeTrump == "playerOne" || emain.whoMadeTrump == "playerTwo")
+            if ((playerOneWinsBeforeRedeal + playerTwoWinsBeforeRedeal + opponentOneWinsBeforeRedeal + opponentTwoWinsBeforeRedeal) != 0)
             {
-                if ((playerOneWinsBeforeRedeal + playerTwoWinsBeforeRedeal) < 3)
+                //check for Euchred first
+                if (emain.whoMadeTrump == "playerOne" || emain.whoMadeTrump == "playerTwo")
                 {
-                    opponentTeamScore += 2;
-                    resetTempScores();
+                    if ((playerOneWinsBeforeRedeal + playerTwoWinsBeforeRedeal) < 3)
+                    {
+                        opponentTeamScore += 2;
+                        resetTempScores();
+                    }
                 }
-            }
-            else if (emain.whoMadeTrump == "opponentOne" || emain.whoMadeTrump == "opponentTwo")
-            {
-                if ((opponentOneWinsBeforeRedeal + opponentTwoWinsBeforeRedeal) < 3)
+                else if (emain.whoMadeTrump == "opponentOne" || emain.whoMadeTrump == "opponentTwo")
+                {
+                    if ((opponentOneWinsBeforeRedeal + opponentTwoWinsBeforeRedeal) < 3)
+                    {
+                        playerTeamScore += 2;
+                        resetTempScores();
+                    }
+                }
+                //5 tricks made 2 points
+                if ((playerOneWinsBeforeRedeal + playerTwoWinsBeforeRedeal) == 5)
                 {
                     playerTeamScore += 2;
                     resetTempScores();
                 }
-            }
-            //5 tricks made 2 points
-            if ((playerOneWinsBeforeRedeal + playerTwoWinsBeforeRedeal) == 5)
-            {
-                playerTeamScore += 2;
-                resetTempScores();
-            }
-            else if ((opponentOneWinsBeforeRedeal + opponentTwoWinsBeforeRedeal) == 5)
-            {
-                opponentTeamScore += 2;
-                resetTempScores();
-            }
-            //3 or 4 tricks made 1 point
-            else if ((playerOneWinsBeforeRedeal + playerTwoWinsBeforeRedeal) == 3 || (playerOneWinsBeforeRedeal + playerTwoWinsBeforeRedeal) == 4)
-            {
-                playerTeamScore += 1;
-                resetTempScores();
-            }
-            else if ((opponentOneWinsBeforeRedeal + opponentTwoWinsBeforeRedeal) == 3 || (opponentOneWinsBeforeRedeal + opponentTwoWinsBeforeRedeal) == 4)
-            {
-                opponentTeamScore += 1;
-                resetTempScores();
+                else if ((opponentOneWinsBeforeRedeal + opponentTwoWinsBeforeRedeal) == 5)
+                {
+                    opponentTeamScore += 2;
+                    resetTempScores();
+                }
+                //3 or 4 tricks made 1 point
+                else if ((playerOneWinsBeforeRedeal + playerTwoWinsBeforeRedeal) == 3 || (playerOneWinsBeforeRedeal + playerTwoWinsBeforeRedeal) == 4)
+                {
+                    playerTeamScore += 1;
+                    resetTempScores();
+                }
+                else if ((opponentOneWinsBeforeRedeal + opponentTwoWinsBeforeRedeal) == 3 || (opponentOneWinsBeforeRedeal + opponentTwoWinsBeforeRedeal) == 4)
+                {
+                    opponentTeamScore += 1;
+                    resetTempScores();
+                }
             }
         }
 	}
@@ -91,5 +97,6 @@ public class ScoreTracking : MonoBehaviour {
         opponentOneWinsBeforeRedeal = 0;
         opponentTwoWinsBeforeRedeal = 0;
         emain.whoMadeTrump = "";
+        playFinished = false;
     }
 }
